@@ -1,0 +1,236 @@
+import type { Phase } from "@/types";
+
+export const phases: Phase[] = [
+  {
+    number: 1,
+    title: "Discovery",
+    description: "Understand the problem & users",
+    sections: [
+      {
+        title: "A. PRD Review",
+        tools: [
+          {
+            name: "CF1 PRD review Gemini Gem",
+            icon: "gemini",
+            url: "https://gemini.google.com/gem/1B2-wr6pucPK0sxQLnrqpWJmMTmAOcBmC?usp=sharing",
+            description:
+              "The Gemini Gem functions as a critical design analyst, converting the PRD into a structured, four-part critique (Frames) designed for immediate use in collaboration tools like Miro or FigJam.",
+            coreOutputFocus: [
+              {
+                frame: "Overview",
+                keyDeliverables:
+                  "A 2-3 sentence summary of the biggest misalignment between requirements and user needs.",
+                details: [
+                  {
+                    title: "Overview",
+                    description:
+                      "High-level synthesis of the problem, persona, and conflict",
+                  },
+                ],
+              },
+              {
+                frame: "Pain points & JTBDs",
+                keyDeliverables:
+                  "The synthesized Core Job-to-be-Done (JTBD) statement and 3 critical questions for the Product Manager.",
+                details: [
+                  {
+                    title: "Pain points & JTBDs",
+                    description:
+                      "Alignment between the stated problem and the user's job-to-be-done.",
+                  },
+                ],
+              },
+              {
+                frame: "Business goals & metrics",
+                keyDeliverables:
+                  "Classification of the 2 main success metrics as either user-leading (user-centric) or lagging (business-centric) indicators.",
+                details: [
+                  {
+                    title: "Business goals & metrics",
+                    description: "Evaluation of success metrics.",
+                  },
+                ],
+              },
+              {
+                frame: "Key design decisions",
+                keyDeliverables:
+                  "Validation of the 3 most complex features against user needs and an analysis of one major design trade-off",
+                details: [
+                  {
+                    title: "Key design decisions",
+                    description:
+                      "Feature justification and implied trade-offs.",
+                  },
+                ],
+              },
+            ],
+            instructions: [
+              "1. Input the PRD: Paste or Upload: Copy the full text of the PRD into the Gemini chat window, or use the file upload feature if the document is a text-based file (e.g., DOCX, TXT).",
+              '2. Initiate Review: Send the content along with a clear prompt (e.g., "Review this PRD and provide a structured critique focusing on clarity, completeness, and alignment.").',
+              "3. Receive Output: The Gem will analyze the document and return a structured critique based on its training.",
+              "4. Prepare for Collaboration: Copy the Output: Copy the text output of the Gem's critique.",
+              "5. Integrate into Miro: Paste onto Board: Paste the critique onto your Discovery phase Miro board. Organize the points into sticky notes or a table for discussion.",
+              "6. Discuss & Prioritize: Use the AI-generated findings as the agenda for your PRD review session. Tag and organize findings to align your team.",
+            ],
+          },
+          {
+            name: "Miro discovery board template",
+            icon: "miro",
+            url: "#",
+            description: "A structured Miro template for discovery phase work.",
+          },
+        ],
+      },
+      {
+        title: "B. Lorem ipsum",
+        tools: [],
+      },
+    ],
+  },
+  {
+    number: 2,
+    title: "Define",
+    description: "Analyze findings & set strategy",
+    sections: [
+      {
+        title: "A. Strategy Framework",
+        tools: [
+          {
+            name: "User Journey Mapper",
+            icon: "miro",
+            url: "#",
+            description: "Map user journeys to identify key touchpoints and opportunities for improvement.",
+          },
+          {
+            name: "Problem Statement Generator",
+            icon: "gemini",
+            url: "#",
+            description: "Generate clear, actionable problem statements based on discovery findings.",
+          },
+        ],
+      },
+      {
+        title: "B. Prioritization",
+        tools: [
+          {
+            name: "Impact/Effort Matrix",
+            icon: "miro",
+            url: "#",
+            description: "Prioritize features and initiatives based on impact and effort.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    number: 3,
+    title: "Ideation",
+    description: "Generate solutions & concepts",
+    sections: [
+      {
+        title: "A. Concept Generation",
+        tools: [
+          {
+            name: "AI Design Assistant",
+            icon: "gemini",
+            url: "#",
+            description: "Generate multiple design concepts based on your requirements and constraints.",
+          },
+          {
+            name: "Brainstorming Template",
+            icon: "miro",
+            url: "#",
+            description: "Structured template for team brainstorming sessions.",
+          },
+        ],
+      },
+      {
+        title: "B. Concept Refinement",
+        tools: [
+          {
+            name: "Design Critique Framework",
+            icon: "miro",
+            url: "#",
+            description: "Framework for structured design critiques and feedback.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    number: 4,
+    title: "Test",
+    description: "Validate solutions with users",
+    sections: [
+      {
+        title: "A. Test Planning",
+        tools: [
+          {
+            name: "Usability Test Plan Generator",
+            icon: "gemini",
+            url: "#",
+            description: "Generate comprehensive usability test plans with scenarios and tasks.",
+          },
+          {
+            name: "Test Session Template",
+            icon: "miro",
+            url: "#",
+            description: "Template for organizing and conducting user testing sessions.",
+          },
+        ],
+      },
+      {
+        title: "B. Analysis",
+        tools: [
+          {
+            name: "Insights Synthesizer",
+            icon: "gemini",
+            url: "#",
+            description: "Synthesize test findings into actionable insights and recommendations.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    number: 5,
+    title: "Implement",
+    description: "Hand-off, launch, and refine",
+    sections: [
+      {
+        title: "A. Hand-off",
+        tools: [
+          {
+            name: "Design Spec Generator",
+            icon: "gemini",
+            url: "#",
+            description: "Generate detailed design specifications for development teams.",
+          },
+          {
+            name: "Component Library",
+            icon: "miro",
+            url: "#",
+            description: "Organized library of reusable design components.",
+          },
+        ],
+      },
+      {
+        title: "B. Launch & Monitor",
+        tools: [
+          {
+            name: "Launch Checklist",
+            icon: "miro",
+            url: "#",
+            description: "Comprehensive checklist to ensure successful product launch.",
+          },
+          {
+            name: "Metrics Dashboard",
+            icon: "miro",
+            url: "#",
+            description: "Track and monitor key performance metrics post-launch.",
+          },
+        ],
+      },
+    ],
+  },
+];

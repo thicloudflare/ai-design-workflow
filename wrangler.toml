@@ -1,0 +1,21 @@
+name = "ai-design-workflow"
+compatibility_date = "2024-12-08"
+pages_build_output_dir = ".vercel/output/static"
+
+# Compatibility flags for Next.js on Workers
+compatibility_flags = ["nodejs_compat"]
+
+# Environment variables (if needed)
+# [vars]
+# MY_VARIABLE = "production_value"
+
+# KV Namespaces (if needed)
+# [[kv_namespaces]]
+# binding = "MY_KV"
+# id = "your-kv-namespace-id"
+
+# D1 Databases (if needed)
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "your-db-name"
+# database_id = "your-db-id"

@@ -1,0 +1,8 @@
+# Local development environment variables
+# Copy this file to .dev.vars and add your actual values
+# .dev.vars is gitignored and won't be committed
+
+# Example variables (uncomment and set as needed):
+# API_KEY=your-api-key-here
+# DATABASE_URL=your-database-url
+# PUBLIC_URL=http://localhost:8788

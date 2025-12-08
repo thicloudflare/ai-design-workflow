@@ -2,6 +2,12 @@
 
 This guide will help you deploy the AI-Enhanced Design Workflow application to Cloudflare Workers.
 
+## ⚠️ Important: This is configured for Cloudflare Workers, NOT Pages
+
+If you created a Cloudflare Pages project, you'll need to:
+1. Delete the Pages project from your Cloudflare dashboard
+2. Deploy using `wrangler deploy` from your local machine (see below)
+
 ## Prerequisites
 
 1. A Cloudflare account (sign up at https://dash.cloudflare.com/sign-up)
@@ -22,49 +28,42 @@ This will open a browser window for you to authorize Wrangler.
 
 ### 2. Build the Application
 
-Build your Next.js application for Cloudflare Workers:
+Build your Next.js application:
 
 ```bash
 npm run build
-npm run pages:build
 ```
 
-This will:
-- Create a static export of your Next.js app
-- Generate the necessary files for Cloudflare Pages/Workers
+This creates a static export in the `out` directory.
 
 ### 3. Preview Locally (Optional)
 
-Test your deployment locally before pushing to production:
+Test your Worker locally before deploying:
 
 ```bash
 npm run preview
 ```
 
-Or use the Cloudflare-specific dev command:
-
-```bash
-npm run cf:dev
-```
+This runs the Worker with Wrangler's dev server.
 
 ### 4. Deploy to Cloudflare Workers
 
-Deploy your application to Cloudflare:
+Deploy your application to Cloudflare Workers:
 
 ```bash
 npm run deploy
 ```
 
-Or use the specific Cloudflare deployment command:
+Or manually:
 
 ```bash
-npm run cf:deploy
+npx wrangler deploy
 ```
 
-Follow the prompts to:
-- Create a new project (if first time)
-- Choose production or preview environment
-- Confirm deployment
+This will:
+- Upload your static files to Workers KV
+- Deploy the Worker script
+- Give you a URL like: `https://ai-design-workflow.your-subdomain.workers.dev`
 
 ## Configuration
 

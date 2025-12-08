@@ -7,13 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "pages:build": "npx @cloudflare/next-on-pages",
-    "preview": "npm run pages:build && wrangler pages dev",
-    "deploy": "npm run pages:build && wrangler pages deploy",
-    "cf:dev": "wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat",
-    "cf:deploy": "wrangler pages deploy .vercel/output/static --project-name=ai-design-workflow"
+    "preview": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
+    "@cloudflare/kv-asset-handler": "^0.4.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.441.0",
     "next": "^14.2.5",

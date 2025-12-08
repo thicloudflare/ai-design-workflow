@@ -1,9 +1,13 @@
 name = "ai-design-workflow"
+main = "worker.js"
 compatibility_date = "2024-12-08"
-pages_build_output_dir = ".vercel/output/static"
 
 # Compatibility flags for Next.js on Workers
 compatibility_flags = ["nodejs_compat"]
+
+# Serve static assets from the 'out' directory
+[site]
+bucket = "./out"
 
 # Environment variables (if needed)
 # [vars]
@@ -13,9 +17,3 @@ compatibility_flags = ["nodejs_compat"]
 # [[kv_namespaces]]
 # binding = "MY_KV"
 # id = "your-kv-namespace-id"
-
-# D1 Databases (if needed)
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "your-db-name"
-# database_id = "your-db-id"

@@ -31,7 +31,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-navy-900 text-white">
       {/* Main Content */}
-      <main className="flex flex-col items-center min-h-screen p-8">
+      <main className="flex flex-col items-center min-h-screen p-8 pb-8">
         {/* Header - Fixed at top */}
         <div className="w-full mb-8">
           <Navigation />
@@ -55,7 +55,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="flex flex-col gap-6 items-center px-8 w-full">
+            <div className="flex flex-col gap-6 items-center px-8 w-full mb-8">
               {/* Phase Cards */}
               <div className="flex gap-6 items-start justify-center w-full flex-wrap">
                 {phases.map((phase) => (
@@ -68,8 +68,10 @@ export default function Home() {
                 ))}
               </div>
 
-              {/* Expanded View */}
-              <div className="w-full">
+              {/* Expanded View - Fixed height container */}
+              <div className={`w-full transition-all duration-1000 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
+                activePhase !== null ? 'h-[450px]' : 'h-0'
+              }`}>
                 {activePhase !== null && (
                   <ExpandedView
                     phase={phases.find((p) => p.number === activePhase) as Phase}

@@ -38,7 +38,7 @@ const config: Config = {
       animation: {
         slideDown: 'slideDown 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)',
         slideInRight: 'slideInRight 0.3s ease-out',
-        fadeIn: 'fadeIn 0.2s ease-out',
+        fadeIn: 'fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
       },
     },
   },

@@ -38,12 +38,12 @@ export default function Home() {
         </div>
 
         {/* Content Section */}
-        <div className={`flex-1 flex flex-col items-center px-8 pb-8 transition-all duration-1000 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
-          activePhase === null ? 'justify-center' : 'justify-start pt-4'
+        <div className={`flex-1 flex flex-col items-center px-8 pb-8 transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          activePhase === null ? 'justify-center' : 'justify-start pt-8'
         }`}>
           <div className="w-full max-w-7xl">
             {/* Title and Description */}
-            <div className="flex flex-col gap-3 items-center text-center mb-8">
+            <div className="flex flex-col gap-3 items-center text-center mb-8 transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
               <h1 className="text-[48px] font-bold text-white font-source-code leading-tight">
                 The Designer&apos;s Cheat Code: <span className="text-[#FFA60C]">AI Edition</span>
               </h1>
@@ -54,7 +54,7 @@ export default function Home() {
             </div>
 
             {/* Phase Cards */}
-            <div className="flex gap-12 items-center justify-center w-full mb-8">
+            <div className="flex gap-12 items-center justify-center w-full mb-8 transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
               {phases.map((phase) => (
                 <PhaseCard
                   key={phase.number}
@@ -65,9 +65,9 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Expanded View - Fixed height */}
-            <div className={`w-full transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
-              activePhase !== null ? 'h-[500px]' : 'h-0'
+            {/* Expanded View - Fixed height with smooth animation */}
+            <div className={`w-full transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${
+              activePhase !== null ? 'h-[500px] opacity-100' : 'h-0 opacity-0'
             }`}>
               {activePhase !== null && (
                 <ExpandedView

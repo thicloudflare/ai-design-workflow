@@ -76,7 +76,7 @@ export const phases: Phase[] = [
           {
             name: "Miro discovery board template",
             icon: "miro",
-            url: "https://miro.com/app/board/uXjVKbryC1g=/?share_link_id=831867335318",
+            url: "https://miro.com/app/board/uXjVKbryC1g=/?userEmail=cnemeth@cloudflare.com&track=true&utm_source=notification&utm_medium=email&utm_campaign=add-to-board&utm_content=go-to-board",
             description: "A structured Miro template for discovery phase work.",
           },
         ],

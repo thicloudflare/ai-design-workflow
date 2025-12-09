@@ -32,7 +32,7 @@ export default function Navigation() {
           isActive("/how-to-use") ? "text-[#FFA60C]" : "text-white hover:text-[#FFA60C]/80"
         }`}
       >
-        How to use
+        Guide & Contribute
       </Link>
     </nav>
   );

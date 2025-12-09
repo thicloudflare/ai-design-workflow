@@ -65,15 +65,17 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Expanded View - Fixed height with smooth animation */}
-            <div className={`w-full transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${
-              activePhase !== null ? 'h-[500px] opacity-100' : 'h-0 opacity-0'
+            {/* Expanded View - Content-hugging with smooth animation */}
+            <div className={`w-full transition-all duration-[1500ms] ease-[cubic-bezier(0.19,1,0.22,1)] overflow-hidden ${
+              activePhase !== null ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
             }`}>
               {activePhase !== null && (
-                <ExpandedView
-                  phase={phases.find((p) => p.number === activePhase) as Phase}
-                  onToolClick={handleToolClick}
-                />
+                <div className="animate-fadeIn">
+                  <ExpandedView
+                    phase={phases.find((p) => p.number === activePhase) as Phase}
+                    onToolClick={handleToolClick}
+                  />
+                </div>
               )}
             </div>
           </div>

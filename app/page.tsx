@@ -54,7 +54,7 @@ export default function Home() {
             </div>
 
             {/* Phase Cards */}
-            <div className="flex gap-12 items-center justify-center w-full mb-8 transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
+            <div className="flex gap-8 items-start justify-center w-full mb-8 transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
               {phases.map((phase) => (
                 <PhaseCard
                   key={phase.number}

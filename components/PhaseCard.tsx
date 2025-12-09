@@ -28,15 +28,21 @@ export default function PhaseCard({ phase, isActive, onClick }: PhaseCardProps) 
     );
   }
 
-  // Default state: Just title in orange
+  // Default state: Number and title vertically stacked
   return (
     <button
       onClick={onClick}
-      className="transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+      className="flex flex-col items-start gap-1 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
     >
-      <span className="text-[32px] font-bold font-source-code text-orange-500/50 hover:text-orange-500/70 transition-all duration-500">
+      <div className="text-[32px] font-bold font-source-code text-white leading-none transition-all duration-500">
+        {phase.number}
+      </div>
+      <div className="text-[32px] font-bold font-source-code text-orange-500/50 hover:text-orange-500/70 leading-none transition-all duration-500">
         {phase.title}
-      </span>
+      </div>
+      <div className="text-[14px] font-source-sans text-white/70 leading-tight mt-1 transition-all duration-500">
+        {phase.description}
+      </div>
     </button>
   );
 }

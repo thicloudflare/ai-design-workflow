@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Navigation from "@/components/Navigation";
+import CreatableSelect from "@/components/CreatableSelect";
 import { phases } from "@/data/phases";
 
 export default function SubmitTool() {
@@ -23,9 +24,19 @@ export default function SubmitTool() {
   // Get available substeps based on selected step
   const getSubsteps = () => {
     if (!formData.step) return [];
-    const phaseNumber = parseInt(formData.step);
-    const phase = phases.find((p) => p.number === phaseNumber);
-    return phase?.sections || [];
+    // Check if step is a phase number or custom text
+    const phaseMatch = formData.step.match(/^(\d+)/);
+    if (phaseMatch) {
+      const phaseNumber = parseInt(phaseMatch[1]);
+      const phase = phases.find((p) => p.number === phaseNumber);
+      return phase?.sections.map((s) => s.title) || [];
+    }
+    return [];
+  };
+
+  // Get available step options
+  const getStepOptions = () => {
+    return phases.map((phase) => `${phase.number}. ${phase.title}`);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -147,21 +158,18 @@ export default function SubmitTool() {
               <label htmlFor="step" className="font-source-code text-[14px] text-white">
                 Which Step? <span className="text-orange-500">*</span>
               </label>
-              <select
+              <CreatableSelect
                 id="step"
                 name="step"
-                required
                 value={formData.step}
-                onChange={handleChange}
-                className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors cursor-pointer"
-              >
-                <option value="">Select a step...</option>
-                {phases.map((phase) => (
-                  <option key={phase.number} value={phase.number}>
-                    {phase.number}. {phase.title}
-                  </option>
-                ))}
-              </select>
+                onChange={(value) => setFormData((prev) => ({ ...prev, step: value, substep: "" }))}
+                options={getStepOptions()}
+                placeholder="Select or type to add new step..."
+                required
+              />
+              <p className="text-white/60 font-source-sans text-[12px]">
+                Select from the list or type to create a custom step
+              </p>
             </div>
 
             {/* Substep Dropdown */}
@@ -169,24 +177,19 @@ export default function SubmitTool() {
               <label htmlFor="substep" className="font-source-code text-[14px] text-white">
                 Which Substep? <span className="text-orange-500">*</span>
               </label>
-              <select
+              <CreatableSelect
                 id="substep"
                 name="substep"
-                required
                 value={formData.substep}
-                onChange={handleChange}
+                onChange={(value) => setFormData((prev) => ({ ...prev, substep: value }))}
+                options={getSubsteps()}
+                placeholder={formData.step ? "Select or type to add new substep..." : "Select a step first..."}
+                required
                 disabled={!formData.step}
-                className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <option value="">
-                  {formData.step ? "Select a substep..." : "Select a step first..."}
-                </option>
-                {getSubsteps().map((section, idx) => (
-                  <option key={idx} value={section.title}>
-                    {section.title}
-                  </option>
-                ))}
-              </select>
+              />
+              <p className="text-white/60 font-source-sans text-[12px]">
+                Select from the list or type to create a custom substep
+              </p>
             </div>
 
             {/* Optional Instruction */}

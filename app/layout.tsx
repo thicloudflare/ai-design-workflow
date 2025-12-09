@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "The AI-Enhanced Design Workflow",
-  description: "A comprehensive workflow for AI-enhanced design processes",
+  title: "AI-Enhanced Design Workflow | Cloudflare One Design Team",
+  description: "A comprehensive guide and toolkit for integrating AI capabilities into your design workflow. Open-source resource by Cloudflare One Design Team.",
+  icons: {
+    icon: '/icon.svg',
+  },
 };
 
 export default function RootLayout({

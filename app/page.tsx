@@ -54,7 +54,7 @@ export default function Home() {
             </div>
 
             {/* Phase Cards */}
-            <div className="flex gap-6 items-start justify-center w-full flex-wrap mb-6">
+            <div className="flex gap-12 items-center justify-center w-full mb-8">
               {phases.map((phase) => (
                 <PhaseCard
                   key={phase.number}

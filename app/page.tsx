@@ -31,57 +31,54 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-navy-900 text-white">
       {/* Main Content */}
-      <main className="flex flex-col items-center h-screen p-6 overflow-hidden">
-        {/* Header - Fixed at top */}
-        <div className="w-full mb-6 flex-shrink-0">
+      <main className="flex flex-col h-screen overflow-hidden">
+        {/* Header - Sticky at top */}
+        <div className="sticky top-0 z-10 bg-navy-900 px-8 pt-8 pb-4 flex-shrink-0">
           <Navigation />
         </div>
 
-        {/* Content Section - Centered when collapsed, moves up when expanded */}
-        <div className="flex-1 flex flex-col items-center justify-center w-full max-w-7xl overflow-hidden">
-          <div 
-            className={`flex flex-col gap-8 items-center w-full transition-transform duration-1000 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
-              activePhase !== null ? '-translate-y-12' : 'translate-y-0'
-            }`}
-            style={{ minHeight: '0' }}
-          >
-            {/* Title and Description */}
-            <div className="flex flex-col gap-3 items-center text-center flex-shrink-0">
-              <h1 className="text-[48px] font-bold text-white font-source-code leading-tight">
-                The AI-Enhanced Design Workflow
-              </h1>
-              <p className="text-[16px] text-white/70 font-source-sans max-w-2xl">
-                A comprehensive guide for integrating AI capabilities into your design process. 
-                Select a phase below to explore AI tools and methods.
-              </p>
-            </div>
-
-            {/* Phase Cards and Expansion */}
-            <div className="flex flex-col gap-4 items-center w-full flex-shrink-0">
-              {/* Phase Cards */}
-              <div className="flex gap-4 items-start justify-center w-full flex-wrap">
-                {phases.map((phase) => (
-                  <PhaseCard
-                    key={phase.number}
-                    phase={phase}
-                    isActive={activePhase === phase.number}
-                    onClick={() => handlePhaseClick(phase.number)}
-                  />
-                ))}
+        {/* Content Section - Scrollable */}
+        <div className="flex-1 flex flex-col overflow-y-auto">
+          <div className="flex-1 flex flex-col items-center justify-center px-8 pb-8">
+            <div className="w-full max-w-7xl">
+              {/* Title and Description - Sticky under nav */}
+              <div className="sticky top-[80px] z-10 bg-navy-900 pb-4 flex-shrink-0">
+                <div className="flex flex-col gap-3 items-center text-center">
+                  <h1 className="text-[48px] font-bold text-white font-source-code leading-tight">
+                    The Designer&apos;s Cheat Code: <span className="text-[#FFA60C]">AI Edition</span>
+                  </h1>
+                  <p className="text-[16px] text-white/70 font-source-sans max-w-2xl">
+                    A comprehensive guide for integrating AI capabilities into your design process. 
+                    Select a phase below to explore AI tools and methods.
+                  </p>
+                </div>
               </div>
 
-              {/* Expanded View - Fixed large height container */}
-              <div 
-                className={`w-full transition-all duration-1000 ease-[cubic-bezier(0.25,0.1,0.25,1)] overflow-hidden ${
-                  activePhase !== null ? 'h-[520px] opacity-100' : 'h-0 opacity-0'
-                }`}
-              >
-                {activePhase !== null && (
-                  <ExpandedView
-                    phase={phases.find((p) => p.number === activePhase) as Phase}
-                    onToolClick={handleToolClick}
-                  />
-                )}
+              {/* Phase Cards and Expansion */}
+              <div className="flex flex-col gap-6 items-center w-full mt-8">
+                {/* Phase Cards - Sticky under title */}
+                <div className="sticky top-[260px] z-10 bg-navy-900 pb-4 w-full">
+                  <div className="flex gap-4 items-start justify-center w-full flex-wrap">
+                    {phases.map((phase) => (
+                      <PhaseCard
+                        key={phase.number}
+                        phase={phase}
+                        isActive={activePhase === phase.number}
+                        onClick={() => handlePhaseClick(phase.number)}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Expanded View - Flexible height */}
+                <div className="w-full">
+                  {activePhase !== null && (
+                    <ExpandedView
+                      phase={phases.find((p) => p.number === activePhase) as Phase}
+                      onToolClick={handleToolClick}
+                    />
+                  )}
+                </div>
               </div>
             </div>
           </div>

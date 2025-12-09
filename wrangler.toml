@@ -10,11 +10,12 @@ compatibility_flags = ["nodejs_compat"]
 [assets]
 directory = "./out"
 
-# Environment variables (if needed)
-# [vars]
-# MY_VARIABLE = "production_value"
+# Environment variables
+# Add your Resend API key as a secret:
+# wrangler secret put RESEND_API_KEY
 
-# KV Namespaces (if needed)
-# [[kv_namespaces]]
-# binding = "MY_KV"
-# id = "your-kv-namespace-id"
+# KV Namespace for tool submissions
+[[kv_namespaces]]
+binding = "SUBMISSIONS"
+id = "placeholder_id"  # Run: wrangler kv:namespace create "SUBMISSIONS" to get actual ID
+preview_id = "placeholder_preview_id"  # For dev: wrangler kv:namespace create "SUBMISSIONS" --preview

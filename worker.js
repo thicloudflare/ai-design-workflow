@@ -1,11 +1,44 @@
+import { handleSubmit, handleApprove, handleGetTools } from './api-handler.js';
+
 /**
  * Cloudflare Workers script to serve static Next.js site
  * With [assets] configuration, Cloudflare automatically serves static files
- * This worker just adds custom headers and handles special cases
+ * This worker handles API routes and adds custom headers
  */
 export default {
   async fetch(request, env, ctx) {
-    // Get the asset response from Cloudflare's asset handler
+    const url = new URL(request.url);
+    
+    // Handle API routes
+    if (url.pathname.startsWith('/api/')) {
+      // CORS preflight
+      if (request.method === 'OPTIONS') {
+        return new Response(null, {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type',
+          },
+        });
+      }
+
+      // Route handlers
+      if (url.pathname === '/api/submit' && request.method === 'POST') {
+        return handleSubmit(request, env);
+      }
+      
+      if (url.pathname === '/api/approve' && request.method === 'GET') {
+        return handleApprove(request, env);
+      }
+      
+      if (url.pathname === '/api/tools' && request.method === 'GET') {
+        return handleGetTools(env);
+      }
+
+      return new Response('Not Found', { status: 404 });
+    }
+    
+    // Serve static assets for non-API routes
     const response = await env.ASSETS.fetch(request);
     
     // Add custom security headers

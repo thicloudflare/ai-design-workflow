@@ -12,6 +12,7 @@ export default function SubmitTool() {
     step: "",
     substep: "",
     instruction: "",
+    submitterEmail: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,42 +32,42 @@ export default function SubmitTool() {
     setSubmitStatus("idle");
 
     const phase = phases.find((p) => p.number === parseInt(formData.step));
-    const substep = phase?.sections.find((s) => s.title === formData.substep);
 
-    const emailBody = `
-New Tool Submission
-
-Tool Name: ${formData.toolName}
-Description: ${formData.description}
-URL: ${formData.url}
-Step: ${formData.step} - ${phase?.title || ""}
-Substep: ${formData.substep}
-${formData.instruction ? `Instruction: ${formData.instruction}` : ""}
-
----
-Submitted via AI-Enhanced Design Workflow
-    `.trim();
-
-    const mailtoLink = `mailto:thi@cloudflare.com?subject=${encodeURIComponent(
-      `Tool Submission: ${formData.toolName}`
-    )}&body=${encodeURIComponent(emailBody)}`;
-
-    // Open mailto link
-    window.location.href = mailtoLink;
-
-    // Reset form after a short delay
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus("success");
-      setFormData({
-        toolName: "",
-        description: "",
-        url: "",
-        step: "",
-        substep: "",
-        instruction: "",
+    try {
+      const response = await fetch('/api/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          step: `${formData.step}. ${phase?.title || ""}`,
+        }),
       });
-    }, 1000);
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        setFormData({
+          toolName: "",
+          description: "",
+          url: "",
+          step: "",
+          substep: "",
+          instruction: "",
+          submitterEmail: "",
+        });
+      } else {
+        setSubmitStatus("error");
+        console.error('Submission failed:', result.error);
+      }
+    } catch (error) {
+      setSubmitStatus("error");
+      console.error('Error submitting form:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -210,6 +211,26 @@ Submitted via AI-Enhanced Design Workflow
               />
             </div>
 
+            {/* Submitter Email */}
+            <div className="flex flex-col gap-2">
+              <label htmlFor="submitterEmail" className="font-source-code text-[14px] text-white">
+                Your Email <span className="text-orange-500">*</span>
+              </label>
+              <input
+                type="email"
+                id="submitterEmail"
+                name="submitterEmail"
+                required
+                value={formData.submitterEmail}
+                onChange={handleChange}
+                className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors"
+                placeholder="your.email@example.com"
+              />
+              <p className="text-white/60 font-source-sans text-[12px]">
+                We&apos;ll notify you when your submission is approved.
+              </p>
+            </div>
+
             {/* Submit Button */}
             <button
               type="submit"
@@ -222,7 +243,14 @@ Submitted via AI-Enhanced Design Workflow
             {/* Success Message */}
             {submitStatus === "success" && (
               <div className="bg-green-500/10 border border-green-500/50 rounded px-4 py-3 font-source-sans text-[14px] text-green-400">
-                ✓ Your email client should open with the submission. Thank you!
+                ✓ Submission received! You&apos;ll be notified once it&apos;s approved. Thank you!
+              </div>
+            )}
+
+            {/* Error Message */}
+            {submitStatus === "error" && (
+              <div className="bg-red-500/10 border border-red-500/50 rounded px-4 py-3 font-source-sans text-[14px] text-red-400">
+                ✗ Failed to submit. Please try again or contact support.
               </div>
             )}
           </form>

@@ -13,9 +13,7 @@ export default function Navigation() {
       <Link
         href="/"
         className={`transition-colors ${
-          isActive("/")
-            ? "text-[#FFA60C]"
-            : "text-white hover:text-white/80"
+          isActive("/") ? "text-[#FFA60C]" : "text-white hover:text-[#FFA60C]/80"
         }`}
       >
         Home
@@ -23,9 +21,7 @@ export default function Navigation() {
       <Link
         href="/submit"
         className={`transition-colors ${
-          isActive("/submit")
-            ? "text-[#FFA60C]"
-            : "text-white hover:text-white/80"
+          isActive("/submit") ? "text-[#FFA60C]" : "text-white hover:text-[#FFA60C]/80"
         }`}
       >
         Submit a tool
@@ -33,9 +29,7 @@ export default function Navigation() {
       <Link
         href="/how-to-use"
         className={`transition-colors ${
-          isActive("/how-to-use")
-            ? "text-[#FFA60C]"
-            : "text-white hover:text-white/80"
+          isActive("/how-to-use") ? "text-[#FFA60C]" : "text-white hover:text-[#FFA60C]/80"
         }`}
       >
         How to use

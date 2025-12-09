@@ -23,7 +23,7 @@ const config: Config = {
       },
       keyframes: {
         slideDown: {
-          '0%': { opacity: '0', transform: 'translateY(-20px)' },
+          '0%': { opacity: '0', transform: 'translateY(-10px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         slideInRight: {
@@ -36,7 +36,7 @@ const config: Config = {
         },
       },
       animation: {
-        slideDown: 'slideDown 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+        slideDown: 'slideDown 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)',
         slideInRight: 'slideInRight 0.3s ease-out',
         fadeIn: 'fadeIn 0.2s ease-out',
       },

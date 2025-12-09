@@ -49,7 +49,7 @@ export default function SidePanel({ tool, onClose }: SidePanelProps) {
             className="border border-orange-500 flex gap-[10px] items-center justify-center px-4 py-2 rounded transition-colors hover:bg-orange-500/10"
           >
             <span className="font-source-sans text-[16px] text-white">
-              Try out Gem
+              Launch tool
             </span>
             <ExternalLink className="w-4 h-4 text-white" />
           </a>

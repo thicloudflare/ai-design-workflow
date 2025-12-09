@@ -41,6 +41,12 @@ Submitted by: ${data.submitterEmail}
 
     console.log('Attempting to send email with API key:', resendApiKey.substring(0, 10) + '...');
 
+    // Disable SSL verification for development (fixes self-signed certificate error)
+    // @ts-ignore - Node.js specific property
+    if (process.env.NODE_ENV === 'development') {
+      process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+    }
+
     const emailResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {

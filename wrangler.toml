@@ -1,13 +1,14 @@
 name = "ai-design-workflow"
 main = "worker.js"
 compatibility_date = "2024-12-08"
+account_id = "b99f9dcbefed0d824644e5c76a1ee4f0"
 
 # Compatibility flags for Next.js on Workers
 compatibility_flags = ["nodejs_compat"]
 
-# Serve static assets from the 'out' directory
-[site]
-bucket = "./out"
+# Serve static assets from the 'out' directory (modern approach)
+[assets]
+directory = "./out"
 
 # Environment variables (if needed)
 # [vars]

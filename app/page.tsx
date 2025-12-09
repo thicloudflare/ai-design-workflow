@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Navigation from "@/components/Navigation";
 import PhaseCard from "@/components/PhaseCard";
 import ExpandedView from "@/components/ExpandedView";
 import SidePanel from "@/components/SidePanel";
@@ -32,20 +33,7 @@ export default function Home() {
       {/* Main Content */}
       <main className="flex flex-col gap-[100px] items-center p-8 min-h-screen">
         {/* Header */}
-        <div className="flex gap-6 items-start justify-center font-source-code text-[16px] text-center underline w-full">
-          <a
-            href="#"
-            className="text-white hover:text-white/80 transition-colors"
-          >
-            How to contribute
-          </a>
-          <a
-            href="#"
-            className="text-white hover:text-white/80 transition-colors"
-          >
-            Disclaimer
-          </a>
-        </div>
+        <Navigation />
 
         {/* Content Section */}
         <div className="flex flex-col gap-[64px] items-center w-full max-w-7xl flex-1">

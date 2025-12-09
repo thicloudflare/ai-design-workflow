@@ -36,7 +36,7 @@ const config: Config = {
         },
       },
       animation: {
-        slideDown: 'slideDown 0.3s ease-out',
+        slideDown: 'slideDown 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
         slideInRight: 'slideInRight 0.3s ease-out',
         fadeIn: 'fadeIn 0.2s ease-out',
       },

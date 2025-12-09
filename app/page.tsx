@@ -41,11 +41,11 @@ export default function Home() {
         <div className="flex-1 flex flex-col items-center justify-center w-full max-w-7xl min-h-0">
           <div 
             className={`flex flex-col gap-[64px] items-center w-full transition-transform duration-1000 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
-              activePhase !== null ? '-translate-y-16' : 'translate-y-0'
+              activePhase !== null ? '-translate-y-8' : 'translate-y-0'
             }`}
           >
             {/* Title and Description */}
-            <div className="flex flex-col gap-4 items-center text-center">
+            <div className="flex flex-col gap-4 items-center text-center mt-8">
               <h1 className="text-[48px] font-bold text-white font-source-code leading-normal">
                 The AI-Enhanced Design Workflow
               </h1>

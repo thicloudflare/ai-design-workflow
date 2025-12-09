@@ -46,11 +46,11 @@ export default function Home() {
             style={{ minHeight: '0' }}
           >
             {/* Title and Description */}
-            <div className="flex flex-col gap-2 items-center text-center flex-shrink-0">
-              <h1 className="text-[36px] font-bold text-white font-source-code leading-tight">
+            <div className="flex flex-col gap-3 items-center text-center flex-shrink-0">
+              <h1 className="text-[48px] font-bold text-white font-source-code leading-tight">
                 The AI-Enhanced Design Workflow
               </h1>
-              <p className="text-[14px] text-white/70 font-source-sans max-w-2xl">
+              <p className="text-[16px] text-white/70 font-source-sans max-w-2xl">
                 A comprehensive guide for integrating AI capabilities into your design process. 
                 Select a phase below to explore AI tools and methods.
               </p>

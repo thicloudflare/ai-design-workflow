@@ -1,4 +1,4 @@
-import { handleSubmit, handleApprove, handleGetTools } from './api-handler.js';
+import { handleSubmit } from './api-handler.js';
 
 /**
  * Cloudflare Workers script to serve static Next.js site
@@ -16,23 +16,15 @@ export default {
         return new Response(null, {
           headers: {
             'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
             'Access-Control-Allow-Headers': 'Content-Type',
           },
         });
       }
 
-      // Route handlers
+      // Handle tool submission
       if (url.pathname === '/api/submit' && request.method === 'POST') {
         return handleSubmit(request, env);
-      }
-      
-      if (url.pathname === '/api/approve' && request.method === 'GET') {
-        return handleApprove(request, env);
-      }
-      
-      if (url.pathname === '/api/tools' && request.method === 'GET') {
-        return handleGetTools(env);
       }
 
       return new Response('Not Found', { status: 404 });

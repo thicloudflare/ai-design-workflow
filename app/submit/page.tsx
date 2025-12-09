@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Navigation from "@/components/Navigation";
 import { phases } from "@/data/phases";
 
 export default function SubmitTool() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     toolName: "",
     description: "",
@@ -48,16 +50,8 @@ export default function SubmitTool() {
       const result = await response.json();
 
       if (response.ok) {
-        setSubmitStatus("success");
-        setFormData({
-          toolName: "",
-          description: "",
-          url: "",
-          step: "",
-          substep: "",
-          instruction: "",
-          submitterEmail: "",
-        });
+        // Redirect to success page
+        router.push('/submit/success');
       } else {
         setSubmitStatus("error");
         console.error('Submission failed:', result.error);
@@ -239,13 +233,6 @@ export default function SubmitTool() {
             >
               {isSubmitting ? "Submitting..." : "Submit Tool for Approval"}
             </button>
-
-            {/* Success Message */}
-            {submitStatus === "success" && (
-              <div className="bg-green-500/10 border border-green-500/50 rounded px-4 py-3 font-source-sans text-[14px] text-green-400">
-                ✓ Submission received! You&apos;ll be notified once it&apos;s approved. Thank you!
-              </div>
-            )}
 
             {/* Error Message */}
             {submitStatus === "error" && (

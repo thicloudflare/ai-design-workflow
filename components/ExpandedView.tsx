@@ -12,7 +12,7 @@ export default function ExpandedView({ phase, onToolClick }: ExpandedViewProps) 
   }
 
   return (
-    <div className="bg-navy-800 border border-orange-500 flex flex-col items-start rounded w-full h-full animate-slideDown overflow-hidden">
+    <div className="bg-navy-800 border border-orange-500 flex flex-col items-start rounded w-full h-full overflow-hidden">
       <div className="flex flex-col gap-6 p-8 w-full h-full overflow-y-auto">
         {phase.sections.map((section, idx) => (
           <div key={idx} className="flex flex-col gap-[10px] items-start w-full">

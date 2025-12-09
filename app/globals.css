@@ -3,5 +3,30 @@
 @tailwind utilities;
 
 body {
-  font-family: "Source Code Pro", monospace;
+  font-family: 'Source Code Pro', monospace;
+}
+
+/* Custom scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ffa60c #080516;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #080516;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #ffa60c;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #ff8c00;
 }

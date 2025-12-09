@@ -38,10 +38,10 @@ export default function Home() {
         </div>
 
         {/* Content Section - Centered when collapsed, moves up when expanded */}
-        <div className="flex-1 flex flex-col items-center justify-center w-full max-w-7xl">
+        <div className="flex-1 flex flex-col items-center justify-center w-full max-w-7xl min-h-0">
           <div 
             className={`flex flex-col gap-[64px] items-center w-full transition-transform duration-1000 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
-              activePhase !== null ? '-translate-y-32' : 'translate-y-0'
+              activePhase !== null ? '-translate-y-16' : 'translate-y-0'
             }`}
           >
             {/* Title and Description */}

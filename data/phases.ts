@@ -131,6 +131,40 @@ export const phases: Phase[] = [
         title: "A. Concept Generation",
         tools: [
           {
+            name: "CF1 workflow validation",
+            icon: "gemini",
+            url: "https://gemini.google.com/gem/1s-g0kNnGyyVVOXf0QvHHISPdccliNCrr?usp=sharing",
+            description: "The Gemini Gem functions as a Zero Trust workflow consultant, rigorously evaluating organizational processes against the Jobs-to-be-Done (JTBD) framework for key Cloudflare One user personas.",
+            coreOutputFocus: [
+              {
+                frame: "Core Output Focus",
+                keyDeliverables: "A structured, five-part validation report for each workflow submitted",
+                details: [
+                  {
+                    title: "Mapping",
+                    description: "Which Cloudflare One products are utilized at each step.",
+                  },
+                  {
+                    title: "Persona",
+                    description: "Which user roles interact with the workflow.",
+                  },
+                  {
+                    title: "Alignment Rating",
+                    description: "A score (Strong, Moderate, Weak, Misaligned) indicating how well the workflow achieves the user's core Job-to-be-Done.",
+                  },
+                  {
+                    title: "Gaps & Issues",
+                    description: "Identification of friction points, security risks, or missing steps.",
+                  },
+                  {
+                    title: "Recommendations",
+                    description: "2-4 specific, actionable improvements using Cloudflare One features (Access policies, Gateway filtering, Tunnel configs).",
+                  },
+                ],
+              },
+            ],
+          },
+          {
             name: "AI Design Assistant",
             icon: "gemini",
             url: "#",

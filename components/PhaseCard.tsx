@@ -12,25 +12,25 @@ export default function PhaseCard({ phase, isActive, onClick }: PhaseCardProps) 
     <button
       onClick={onClick}
       className={clsx(
-        "text-left p-6 rounded transition-all duration-300 font-source-code leading-normal flex flex-col gap-3 w-[180px] h-[200px]",
+        "px-4 py-3 rounded transition-all duration-300 font-source-code leading-none",
         isActive
-          ? "bg-navy-800 border-2 border-solid border-orange-500 scale-105"
-          : "bg-navy-800/50 border-2 border-dashed border-white/20 hover:border-white/40 hover:bg-navy-800/70 active:scale-95"
+          ? "bg-navy-800 border-2 border-solid border-orange-500"
+          : "bg-transparent border-2 border-transparent hover:bg-white/5"
       )}
     >
-      <div className="flex flex-col gap-2">
-        <div className={clsx(
-          "text-[40px] font-bold leading-none",
+      <div className="flex items-baseline gap-2">
+        <span className={clsx(
+          "text-[24px] font-bold",
           isActive ? "text-orange-500" : "text-white"
         )}>
           {phase.number}
-        </div>
-        <div className="text-[20px] font-bold text-white leading-tight">
+        </span>
+        <span className={clsx(
+          "text-[24px] font-bold",
+          isActive ? "text-orange-500" : "text-white"
+        )}>
           {phase.title}
-        </div>
-      </div>
-      <div className="text-[14px] font-source-sans font-normal text-white/70 line-clamp-3">
-        {phase.description}
+        </span>
       </div>
     </button>
   );

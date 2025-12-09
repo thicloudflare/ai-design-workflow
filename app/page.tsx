@@ -65,15 +65,17 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Expanded View - Flexible height */}
-            {activePhase !== null && (
-              <div className="w-full">
+            {/* Expanded View - Fixed height */}
+            <div className={`w-full transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
+              activePhase !== null ? 'h-[500px]' : 'h-0'
+            }`}>
+              {activePhase !== null && (
                 <ExpandedView
                   phase={phases.find((p) => p.number === activePhase) as Phase}
                   onToolClick={handleToolClick}
                 />
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </main>

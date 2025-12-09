@@ -64,39 +64,28 @@ export default function SidePanel({ tool, onClose }: SidePanelProps) {
 
           {/* Core Output Focus */}
           {tool.coreOutputFocus && tool.coreOutputFocus.length > 0 && (
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-3">
               <h3 className="font-source-sans font-bold text-[16px] text-orange-500">
                 Core Output Focus:
               </h3>
-              <div className="border border-white/20 rounded overflow-hidden">
-                {/* Table Header */}
-                <div className="flex border-b border-white/20">
-                  <div className="w-[150px] px-4 py-2 font-source-sans font-bold text-[14px] text-white">
-                    Frame
-                  </div>
-                  <div className="flex-1 px-4 py-2 border-l border-white/20 font-source-sans font-bold text-[14px] text-white">
-                    Key deliverables
-                  </div>
-                </div>
-                {/* Table Rows */}
-                {tool.coreOutputFocus.map((output, idx) => (
-                  <div key={idx} className="flex border-b border-white/20 min-h-[48px]">
-                    <div className="w-[150px] px-4 py-2 flex flex-col gap-2">
-                      <div className="font-source-sans font-bold text-[12px] text-orange-500 mb-2">
-                        {output.frame}
-                      </div>
-                      {output.details && output.details.map((detail, detailIdx) => (
-                        <div key={detailIdx} className="font-source-sans text-[12px] text-white leading-5">
-                          {detail.description}
-                        </div>
-                      ))}
+              <p className="font-source-sans text-[14px] text-white/80 leading-normal">
+                {tool.coreOutputFocus[0]?.keyDeliverables}
+              </p>
+              <ul className="space-y-2">
+                {tool.coreOutputFocus[0]?.details?.map((detail, idx) => (
+                  <li key={idx} className="flex items-start gap-2">
+                    <span className="text-orange-500 mt-1 flex-shrink-0">•</span>
+                    <div>
+                      <span className="font-source-sans font-bold text-[14px] text-white">
+                        {detail.title}:
+                      </span>
+                      <span className="font-source-sans text-[14px] text-white/80 ml-1">
+                        {detail.description}
+                      </span>
                     </div>
-                    <div className="flex-1 px-4 py-2 border-l border-white/20 font-source-sans text-[12px] text-white leading-5">
-                      {output.keyDeliverables}
-                    </div>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           )}
 

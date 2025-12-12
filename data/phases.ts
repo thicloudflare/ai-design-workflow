@@ -131,6 +131,19 @@ export const phases: Phase[] = [
         title: "A. Concept Generation",
         tools: [
           {
+            name: "PCX CLUE index",
+            icon: "miro",
+            url: "https://clue.cloudflarecontent.com/",
+            description: "Write user-friendly UI, API, and email content. The CLUE Index evaluates content based on UX content best practices and Cloudflare's internal style guide.",
+            coreOutputFocus: [
+              {
+                frame: "Core Output Focus",
+                keyDeliverables: "Rate your content and give recommendations to match Cloudflare standards and guidelines.",
+                details: [],
+              },
+            ],
+          },
+          {
             name: "CF1 workflow validation",
             icon: "gemini",
             url: "https://gemini.google.com/gem/1s-g0kNnGyyVVOXf0QvHHISPdccliNCrr?usp=sharing",

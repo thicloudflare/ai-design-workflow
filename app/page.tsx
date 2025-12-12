@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import PhaseCard from "@/components/PhaseCard";
 import ExpandedView from "@/components/ExpandedView";
 import SidePanel from "@/components/SidePanel";
+import SearchBar from "@/components/SearchBar";
 import { phases } from "@/data/phases";
 import type { Phase, Tool } from "@/types";
 
@@ -51,6 +52,11 @@ export default function Home() {
                 A comprehensive guide for integrating AI capabilities into your design process. 
                 Select a phase below to explore AI tools and methods.
               </p>
+            </div>
+
+            {/* Search Bar */}
+            <div className="flex justify-center mb-8">
+              <SearchBar onToolSelect={handleToolClick} />
             </div>
 
             {/* Phase Cards */}

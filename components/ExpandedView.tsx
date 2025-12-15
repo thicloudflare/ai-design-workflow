@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import type { Phase, Tool } from "@/types";
 import ToolLink from "./ToolLink";
 
@@ -7,12 +8,25 @@ interface ExpandedViewProps {
 }
 
 export default function ExpandedView({ phase, onToolClick }: ExpandedViewProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setTimeout(() => {
+        containerRef.current?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start'
+        });
+      }, 100);
+    }
+  }, [phase.number]);
+
   if (!phase.sections || phase.sections.length === 0) {
     return null;
   }
 
   return (
-    <div className="bg-navy-800 border border-orange-500 flex flex-col items-start rounded w-full">
+    <div ref={containerRef} className="bg-navy-800 border border-orange-500 flex flex-col items-start rounded w-full max-h-[calc(100vh-250px)] overflow-y-auto">
       <div className="flex flex-col gap-6 p-8 w-full">
         {phase.sections.map((section, idx) => (
           <div key={idx} className="flex flex-col gap-[10px] items-start w-full">

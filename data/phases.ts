@@ -82,8 +82,15 @@ export const phases: Phase[] = [
         ],
       },
       {
-        title: "B. Lorem ipsum",
-        tools: [],
+        title: "B. Customer Discovery",
+        tools: [
+          {
+            name: "Meeting notes to test plan",
+            icon: "gemini",
+            url: "https://gemini.google.com/gem/18V6380tgwmlUAvL5Np166S2nQnye9L0E?usp=sharing",
+            description: "Turning Gemini created or typed meeting notes and structures it into a test plan",
+          },
+        ],
       },
     ],
   },
@@ -130,19 +137,6 @@ export const phases: Phase[] = [
       {
         title: "A. Concept Generation",
         tools: [
-          {
-            name: "PCX CLUE index",
-            icon: "miro",
-            url: "https://clue.cloudflarecontent.com/",
-            description: "Write user-friendly UI, API, and email content. The CLUE Index evaluates content based on UX content best practices and Cloudflare's internal style guide.",
-            coreOutputFocus: [
-              {
-                frame: "Core Output Focus",
-                keyDeliverables: "Rate your content and give recommendations to match Cloudflare standards and guidelines.",
-                details: [],
-              },
-            ],
-          },
           {
             name: "CF1 workflow validation",
             icon: "gemini",
@@ -202,6 +196,36 @@ export const phases: Phase[] = [
           },
         ],
       },
+      {
+        title: "C. Content Guide",
+        tools: [
+          {
+            name: "PCX CLUE index",
+            icon: "miro",
+            url: "https://clue.cloudflarecontent.com/",
+            description: "Write user-friendly UI, API, and email content. The CLUE Index evaluates content based on UX content best practices and Cloudflare's internal style guide.",
+            coreOutputFocus: [
+              {
+                frame: "Core Output Focus",
+                keyDeliverables: "Rate your content and give recommendations to match Cloudflare standards and guidelines.",
+                details: [],
+              },
+            ],
+          },
+          {
+            name: "Settings Label + Description Generator",
+            icon: "gemini",
+            url: "https://gemini.google.com/gem/f724748d9d57?usp=sharing",
+            description: "Share details about new settings to generate outcome-oriented labels and descriptions",
+          },
+          {
+            name: "Empty State Content",
+            icon: "gemini",
+            url: "https://gemini.google.com/gem/1kD58Sb0fvthDiq8CHb0CdMcWhLvsTmHO?usp=sharing",
+            description: "Add your PRD or Product summary to create the content for an empty state",
+          },
+        ],
+      },
     ],
   },
   {
@@ -234,6 +258,12 @@ export const phases: Phase[] = [
             icon: "gemini",
             url: "#",
             description: "Synthesize test findings into actionable insights and recommendations.",
+          },
+          {
+            name: "Interim High-Level Research Observations",
+            icon: "gemini",
+            url: "https://gemini.google.com/gem/086c392136b9?usp=sharing",
+            description: "Give interim findings of ongoing research to keep stakeholders in the loop on research initiatives. Please ensure all customer PII is cleaned from transcripts before submitting!",
           },
         ],
       },

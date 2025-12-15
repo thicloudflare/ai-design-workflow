@@ -58,6 +58,27 @@ npm start
     └── index.ts         # TypeScript types
 ```
 
+## API Documentation
+
+The toolkit includes a comprehensive REST API for programmatic access:
+
+- **Quick Start**: See [API_QUICKSTART.md](./API_QUICKSTART.md) for getting started
+- **Full Documentation**: See [API_DOCUMENTATION.md](./API_DOCUMENTATION.md) for complete API reference
+
+### API Endpoints
+
+- `GET /api/phases` - Get all workflow phases
+- `GET /api/phases/[id]` - Get specific phase
+- `GET /api/tools` - Get all tools (with filtering)
+- `GET /api/search` - Universal search
+- `GET /api/stats` - Get toolkit statistics
+- `POST /api/submit` - Submit new tool
+
+Example:
+```bash
+curl http://localhost:3000/api/phases
+```
+
 ## Customization
 
 To add more phases or tools, edit the `data/phases.ts` file.

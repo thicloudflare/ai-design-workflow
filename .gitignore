@@ -44,4 +44,3 @@ worker/
 
 # Cloudflare Pages
 .vercel/
-functions/

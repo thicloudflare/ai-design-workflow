@@ -631,7 +631,7 @@ export default {
       if (url.pathname === '/api/stats') return handleStats();
       if (url.pathname === '/api/search') return handleSearch(request);
       if (url.pathname === '/api/sections') return handleSections(request);
-      if (url.pathname === '/api/phases') return handlePhases(request);
+      if (url.pathname === '/api/phases') return handlePhases(request, env);
       
       const phaseMatch = url.pathname.match(/^\/api\/phases\/(\d+)$/);
       if (phaseMatch) return handlePhaseById(request, phaseMatch[1]);

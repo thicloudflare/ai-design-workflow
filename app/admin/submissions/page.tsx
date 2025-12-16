@@ -464,8 +464,9 @@ export default function AdminSubmissions() {
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-navy-700 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500"
+                      className="w-full bg-navy-800 border border-white/20 rounded px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-orange-500"
                       required
+                      placeholder="Enter tool name"
                     />
                   </div>
                   <div>
@@ -474,7 +475,7 @@ export default function AdminSubmissions() {
                       type="url"
                       value={formData.url}
                       onChange={(e) => setFormData({ ...formData, url: e.target.value })}
-                      className="w-full bg-navy-700 border border-white/20 rounded px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-orange-500"
+                      className="w-full bg-navy-800 border border-white/20 rounded px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-orange-500"
                       required
                       placeholder="https://example.com"
                     />
@@ -486,7 +487,8 @@ export default function AdminSubmissions() {
                   <textarea
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full bg-navy-700 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500 h-24"
+                    className="w-full bg-navy-800 border border-white/20 rounded px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-orange-500 h-24"
+                    placeholder="Enter tool description"
                   />
                 </div>
 
@@ -496,7 +498,7 @@ export default function AdminSubmissions() {
                     <select
                       value={formData.icon}
                       onChange={(e) => setFormData({ ...formData, icon: e.target.value as "gemini" | "miro" })}
-                      className="w-full bg-navy-700 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500"
+                      className="w-full bg-navy-800 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500"
                       required
                     >
                       {ICON_OPTIONS.map((icon) => (
@@ -518,7 +520,7 @@ export default function AdminSubmissions() {
                           section_title: ""
                         });
                       }}
-                      className="w-full bg-navy-700 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500"
+                      className="w-full bg-navy-800 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500"
                       required
                     >
                       {staticPhases.map((phase) => (
@@ -533,7 +535,7 @@ export default function AdminSubmissions() {
                     <select
                       value={formData.section_title}
                       onChange={(e) => setFormData({ ...formData, section_title: e.target.value })}
-                      className="w-full bg-navy-700 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500"
+                      className="w-full bg-navy-800 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500"
                       required
                     >
                       <option value="">Select section</option>
@@ -558,7 +560,7 @@ export default function AdminSubmissions() {
                   <button
                     type="button"
                     onClick={cancelForm}
-                    className="flex-1 bg-navy-700 hover:bg-navy-600 text-white py-3 rounded font-medium transition-colors"
+                    className="flex-1 bg-navy-800 hover:bg-navy-900 text-white py-3 rounded font-medium transition-colors"
                   >
                     Cancel
                   </button>

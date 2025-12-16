@@ -1,17 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import PhaseCard from "@/components/PhaseCard";
 import ExpandedView from "@/components/ExpandedView";
 import SidePanel from "@/components/SidePanel";
 import SearchBar from "@/components/SearchBar";
-import { phases } from "@/data/phases";
 import type { Phase, Tool } from "@/types";
 
 export default function Home() {
+  const [phases, setPhases] = useState<Phase[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activePhase, setActivePhase] = useState<number | null>(null);
   const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
+
+  useEffect(() => {
+    loadPhases();
+  }, []);
+
+  const loadPhases = async () => {
+    try {
+      const response = await fetch("/api/phases");
+      const data = await response.json();
+      if (data.success) {
+        setPhases(data.data);
+      }
+    } catch (error) {
+      console.error("Failed to load phases:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handlePhaseClick = (phaseNumber: number) => {
     if (activePhase === phaseNumber) {
@@ -28,6 +47,14 @@ export default function Home() {
   const handleCloseSidePanel = () => {
     setSelectedTool(null);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-navy-900 text-white flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-navy-900 text-white">

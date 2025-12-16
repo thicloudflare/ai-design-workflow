@@ -303,16 +303,196 @@ async function rejectSubmission(request, env) {
   }
 }
 
+// Get all approved tools
+async function getAllApprovedTools(env) {
+  if (!env.DB) {
+    return new Response(JSON.stringify({ error: 'Database not configured' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  try {
+    const { results } = await env.DB.prepare(
+      `SELECT * FROM approved_tools ORDER BY approved_at DESC`
+    ).all();
+
+    return new Response(JSON.stringify({
+      success: true,
+      data: results,
+      count: results.length,
+    }), {
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({
+      error: 'Failed to fetch tools',
+      details: error.message,
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}
+
+// Hide tool
+async function hideToolById(request, env) {
+  if (!env.DB) {
+    return new Response(JSON.stringify({ error: 'Database not configured' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  try {
+    const { toolId, adminPassword } = await request.json();
+
+    if (adminPassword !== env.ADMIN_PASSWORD) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    await env.DB.prepare(
+      `UPDATE approved_tools SET visible = 0 WHERE id = ?`
+    ).bind(toolId).run();
+
+    return new Response(JSON.stringify({
+      success: true,
+      message: 'Tool hidden',
+    }), {
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({
+      error: 'Failed to hide tool',
+      details: error.message,
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}
+
+// Show tool
+async function showToolById(request, env) {
+  if (!env.DB) {
+    return new Response(JSON.stringify({ error: 'Database not configured' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  try {
+    const { toolId, adminPassword } = await request.json();
+
+    if (adminPassword !== env.ADMIN_PASSWORD) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    await env.DB.prepare(
+      `UPDATE approved_tools SET visible = 1 WHERE id = ?`
+    ).bind(toolId).run();
+
+    return new Response(JSON.stringify({
+      success: true,
+      message: 'Tool shown',
+    }), {
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({
+      error: 'Failed to show tool',
+      details: error.message,
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}
+
+// Delete tool
+async function deleteToolById(request, env) {
+  if (!env.DB) {
+    return new Response(JSON.stringify({ error: 'Database not configured' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  try {
+    const { toolId, adminPassword } = await request.json();
+
+    if (adminPassword !== env.ADMIN_PASSWORD) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    await env.DB.prepare(
+      `DELETE FROM approved_tools WHERE id = ?`
+    ).bind(toolId).run();
+
+    return new Response(JSON.stringify({
+      success: true,
+      message: 'Tool deleted',
+    }), {
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({
+      error: 'Failed to delete tool',
+      details: error.message,
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}
+
 // ===== API ROUTES HANDLERS =====
-function handlePhases(request) {
+async function handlePhases(request, env) {
   const { searchParams } = new URL(request.url);
   const search = searchParams.get('search')?.toLowerCase();
   const icon = searchParams.get('icon');
 
-  let filteredPhases = phases;
+  let mergedPhases = JSON.parse(JSON.stringify(phases));
+
+  // Merge approved visible tools from database
+  if (env.DB) {
+    try {
+      const { results } = await env.DB.prepare(
+        `SELECT * FROM approved_tools WHERE visible = 1`
+      ).all();
+
+      results.forEach(tool => {
+        const phase = mergedPhases.find(p => p.number === tool.phase_number);
+        if (phase) {
+          const section = phase.sections.find(s => s.title === tool.section_title);
+          if (section) {
+            section.tools.push({
+              name: tool.name,
+              icon: tool.icon,
+              url: tool.url,
+              description: tool.description || '',
+            });
+          }
+        }
+      });
+    } catch (error) {
+      console.error('Error fetching approved tools:', error);
+    }
+  }
+
+  let filteredPhases = mergedPhases;
 
   if (search) {
-    filteredPhases = phases.map(phase => ({
+    filteredPhases = mergedPhases.map(phase => ({
       ...phase,
       sections: phase.sections.map(section => ({
         ...section,
@@ -479,6 +659,22 @@ export default {
 
       if (url.pathname === '/api/admin/reject' && request.method === 'POST') {
         return rejectSubmission(request, env);
+      }
+
+      if (url.pathname === '/api/admin/tools' && request.method === 'GET') {
+        return getAllApprovedTools(env);
+      }
+
+      if (url.pathname === '/api/admin/tools/hide' && request.method === 'POST') {
+        return hideToolById(request, env);
+      }
+
+      if (url.pathname === '/api/admin/tools/show' && request.method === 'POST') {
+        return showToolById(request, env);
+      }
+
+      if (url.pathname === '/api/admin/tools/delete' && request.method === 'POST') {
+        return deleteToolById(request, env);
       }
 
       return new Response(JSON.stringify({ error: 'Not Found' }), { 

@@ -504,10 +504,11 @@ async function addToolManually(request, env) {
 
     await env.DB.prepare(
       `INSERT INTO approved_tools (
-        name, url, description, icon, phase_number, phase_title, 
+        submission_id, name, url, description, icon, phase_number, phase_title, 
         section_title, visible
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
     ).bind(
+      0,
       toolData.name,
       toolData.url,
       toolData.description || null,

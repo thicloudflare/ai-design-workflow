@@ -166,7 +166,7 @@ export default function AdminSubmissions() {
 
   const handleShow = async (toolId: number | string) => {
     if (typeof toolId === 'string') {
-      alert("Cannot modify static tools");
+      alert("Static homepage tools are always visible");
       return;
     }
 
@@ -288,7 +288,7 @@ export default function AdminSubmissions() {
 
   const startEditTool = (tool: ApprovedTool) => {
     if (typeof tool.id === 'string') {
-      alert("Cannot edit static tools from homepage");
+      alert("Static homepage tools cannot be edited here. Edit them in the codebase (data/phases.ts)");
       return;
     }
 
@@ -474,8 +474,9 @@ export default function AdminSubmissions() {
                       type="url"
                       value={formData.url}
                       onChange={(e) => setFormData({ ...formData, url: e.target.value })}
-                      className="w-full bg-navy-700 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500"
+                      className="w-full bg-navy-700 border border-white/20 rounded px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-orange-500"
                       required
+                      placeholder="https://example.com"
                     />
                   </div>
                 </div>
@@ -715,41 +716,49 @@ export default function AdminSubmissions() {
                     </div>
 
                     <div className="flex gap-2">
-                      {tool.source === 'submitted' && (
-                        <>
-                          <button
-                            onClick={() => startEditTool(tool)}
-                            className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded transition-colors"
-                            title="Edit tool"
-                          >
-                            <Edit className="w-5 h-5" />
-                          </button>
-                          {tool.visible === 1 ? (
-                            <button
-                              onClick={() => handleHide(tool.id)}
-                              className="bg-orange-600 hover:bg-orange-700 text-white p-3 rounded transition-colors"
-                              title="Hide from public"
-                            >
-                              <EyeOff className="w-5 h-5" />
-                            </button>
-                          ) : (
-                            <button
-                              onClick={() => handleShow(tool.id)}
-                              className="bg-green-600 hover:bg-green-700 text-white p-3 rounded transition-colors"
-                              title="Show to public"
-                            >
-                              <Eye className="w-5 h-5" />
-                            </button>
-                          )}
-                          <button
-                            onClick={() => handleDelete(tool.id, tool.name)}
-                            className="bg-red-600 hover:bg-red-700 text-white p-3 rounded transition-colors"
-                            title="Delete permanently"
-                          >
-                            <Trash2 className="w-5 h-5" />
-                          </button>
-                        </>
+                      <button
+                        onClick={() => startEditTool(tool)}
+                        className={`p-3 rounded transition-colors ${
+                          tool.source === 'static' 
+                            ? 'bg-navy-600 text-white/40 cursor-not-allowed' 
+                            : 'bg-blue-600 hover:bg-blue-700 text-white'
+                        }`}
+                        title={tool.source === 'static' ? 'Cannot edit static tools' : 'Edit tool'}
+                      >
+                        <Edit className="w-5 h-5" />
+                      </button>
+                      {tool.visible === 1 ? (
+                        <button
+                          onClick={() => handleHide(tool.id)}
+                          className={`p-3 rounded transition-colors ${
+                            tool.source === 'static'
+                              ? 'bg-navy-600 text-white/40 cursor-not-allowed'
+                              : 'bg-orange-600 hover:bg-orange-700 text-white'
+                          }`}
+                          title={tool.source === 'static' ? 'Static tools always visible' : 'Hide from public'}
+                        >
+                          <EyeOff className="w-5 h-5" />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleShow(tool.id)}
+                          className="bg-green-600 hover:bg-green-700 text-white p-3 rounded transition-colors"
+                          title="Show to public"
+                        >
+                          <Eye className="w-5 h-5" />
+                        </button>
                       )}
+                      <button
+                        onClick={() => handleDelete(tool.id, tool.name)}
+                        className={`p-3 rounded transition-colors ${
+                          tool.source === 'static'
+                            ? 'bg-navy-600 text-white/40 cursor-not-allowed'
+                            : 'bg-red-600 hover:bg-red-700 text-white'
+                        }`}
+                        title={tool.source === 'static' ? 'Cannot delete static tools' : 'Delete permanently'}
+                      >
+                        <Trash2 className="w-5 h-5" />
+                      </button>
                     </div>
                   </div>
                 </div>

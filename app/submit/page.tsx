@@ -202,24 +202,6 @@ export default function SubmitTool() {
               />
             </div>
 
-            {/* Icon Type */}
-            <div className="flex flex-col gap-2">
-              <label htmlFor="icon" className="font-source-code text-[14px] text-white">
-                Tool Type <span className="text-orange-500">*</span>
-              </label>
-              <select
-                id="icon"
-                name="icon"
-                required
-                value={formData.icon}
-                onChange={handleChange}
-                className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors"
-              >
-                <option value="gemini">Gemini (AI Tool)</option>
-                <option value="miro">Miro (Template/Board)</option>
-              </select>
-            </div>
-
             {/* Step Dropdown */}
             <div className="flex flex-col gap-2">
               <label htmlFor="step" className="font-source-code text-[14px] text-white">

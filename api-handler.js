@@ -93,32 +93,60 @@ export async function handleSubmit(request, env) {
     const submission = await request.json();
     
     // Validate required fields
-    if (!submission.toolName || !submission.url || !submission.step || !submission.substep || !submission.submitterEmail) {
+    if (!submission.toolName || !submission.toolUrl || !submission.phaseNumber || !submission.sectionTitle || !submission.email) {
       return new Response(JSON.stringify({ error: 'Missing required fields' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    // Send email notification
-    const emailSent = await sendEmail(env, submission);
-    
-    if (emailSent) {
-      return new Response(JSON.stringify({ 
-        success: true,
-        message: 'Submission received! Thank you for contributing.' 
-      }), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    } else {
-      return new Response(JSON.stringify({ 
-        error: 'Failed to send submission. Please try again.' 
-      }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      });
+    // Save to D1 database
+    if (env.DB) {
+      try {
+        await env.DB.prepare(
+          `INSERT INTO submitted_tools (
+            name, url, description, icon, phase_number, phase_title, 
+            section_title, use_case, submitted_by_name, submitted_by_email, status
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        ).bind(
+          submission.toolName,
+          submission.toolUrl,
+          submission.description || null,
+          submission.icon || 'gemini',
+          submission.phaseNumber,
+          submission.phaseTitle,
+          submission.sectionTitle,
+          submission.useCase || null,
+          submission.name || null,
+          submission.email,
+          'pending'
+        ).run();
+      } catch (dbError) {
+        console.error('Database error:', dbError);
+        // Continue to send email even if DB fails
+      }
     }
+
+    // Send email notification (keep existing functionality)
+    const emailSubmission = {
+      toolName: submission.toolName,
+      description: submission.description,
+      url: submission.toolUrl,
+      step: submission.phaseTitle,
+      substep: submission.sectionTitle,
+      instruction: submission.useCase,
+      submitterEmail: submission.email,
+    };
+    
+    await sendEmail(env, emailSubmission);
+    
+    return new Response(JSON.stringify({ 
+      success: true,
+      message: 'Submission received! You will be notified when it is reviewed.' 
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     return new Response(JSON.stringify({ 
       error: 'Invalid request',

@@ -101,31 +101,11 @@ export const phases: Phase[] = [
     sections: [
       {
         title: "A. Strategy Framework",
-        tools: [
-          {
-            name: "User Journey Mapper",
-            icon: "miro",
-            url: "#",
-            description: "Map user journeys to identify key touchpoints and opportunities for improvement.",
-          },
-          {
-            name: "Problem Statement Generator",
-            icon: "gemini",
-            url: "#",
-            description: "Generate clear, actionable problem statements based on discovery findings.",
-          },
-        ],
+        tools: [],
       },
       {
         title: "B. Prioritization",
-        tools: [
-          {
-            name: "Impact/Effort Matrix",
-            icon: "miro",
-            url: "#",
-            description: "Prioritize features and initiatives based on impact and effort.",
-          },
-        ],
+        tools: [],
       },
     ],
   },
@@ -171,30 +151,11 @@ export const phases: Phase[] = [
               },
             ],
           },
-          {
-            name: "AI Design Assistant",
-            icon: "gemini",
-            url: "#",
-            description: "Generate multiple design concepts based on your requirements and constraints.",
-          },
-          {
-            name: "Brainstorming Template",
-            icon: "miro",
-            url: "#",
-            description: "Structured template for team brainstorming sessions.",
-          },
         ],
       },
       {
         title: "B. Concept Refinement",
-        tools: [
-          {
-            name: "Design Critique Framework",
-            icon: "miro",
-            url: "#",
-            description: "Framework for structured design critiques and feedback.",
-          },
-        ],
+        tools: [],
       },
       {
         title: "C. Content Guide",
@@ -235,30 +196,11 @@ export const phases: Phase[] = [
     sections: [
       {
         title: "A. Test Planning",
-        tools: [
-          {
-            name: "Usability Test Plan Generator",
-            icon: "gemini",
-            url: "#",
-            description: "Generate comprehensive usability test plans with scenarios and tasks.",
-          },
-          {
-            name: "Test Session Template",
-            icon: "miro",
-            url: "#",
-            description: "Template for organizing and conducting user testing sessions.",
-          },
-        ],
+        tools: [],
       },
       {
         title: "B. Analysis",
         tools: [
-          {
-            name: "Insights Synthesizer",
-            icon: "gemini",
-            url: "#",
-            description: "Synthesize test findings into actionable insights and recommendations.",
-          },
           {
             name: "Interim High-Level Research Observations",
             icon: "gemini",
@@ -276,37 +218,11 @@ export const phases: Phase[] = [
     sections: [
       {
         title: "A. Hand-off",
-        tools: [
-          {
-            name: "Design Spec Generator",
-            icon: "gemini",
-            url: "#",
-            description: "Generate detailed design specifications for development teams.",
-          },
-          {
-            name: "Component Library",
-            icon: "miro",
-            url: "#",
-            description: "Organized library of reusable design components.",
-          },
-        ],
+        tools: [],
       },
       {
         title: "B. Launch & Monitor",
-        tools: [
-          {
-            name: "Launch Checklist",
-            icon: "miro",
-            url: "#",
-            description: "Comprehensive checklist to ensure successful product launch.",
-          },
-          {
-            name: "Metrics Dashboard",
-            icon: "miro",
-            url: "#",
-            description: "Track and monitor key performance metrics post-launch.",
-          },
-        ],
+        tools: [],
       },
     ],
   },

@@ -9,3 +9,9 @@ compatibility_flags = ["nodejs_compat"]
 # Serve static assets from the 'out' directory
 [assets]
 directory = "./out"
+
+# D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "ai-toolkit"
+database_id = "0971160b-b743-4b36-86c7-684845139ea3"

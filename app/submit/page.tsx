@@ -12,10 +12,12 @@ export default function SubmitTool() {
     toolName: "",
     description: "",
     url: "",
+    icon: "gemini" as "gemini" | "miro",
     step: "",
     substep: "",
     instruction: "",
     submitterEmail: "",
+    submitterName: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,7 +46,9 @@ export default function SubmitTool() {
     setIsSubmitting(true);
     setSubmitStatus("idle");
 
-    const phase = phases.find((p) => p.number === parseInt(formData.step));
+    const phaseMatch = formData.step.match(/^(\d+)/);
+    const phaseNumber = phaseMatch ? parseInt(phaseMatch[1]) : null;
+    const phase = phases.find((p) => p.number === phaseNumber);
 
     try {
       const response = await fetch('/api/submit', {
@@ -53,8 +57,16 @@ export default function SubmitTool() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ...formData,
-          step: `${formData.step}. ${phase?.title || ""}`,
+          name: formData.submitterName,
+          email: formData.submitterEmail,
+          toolName: formData.toolName,
+          toolUrl: formData.url,
+          description: formData.description,
+          icon: formData.icon,
+          phaseNumber: phaseNumber,
+          phaseTitle: phase?.title || formData.step,
+          sectionTitle: formData.substep,
+          useCase: formData.instruction,
         }),
       });
 
@@ -103,6 +115,43 @@ export default function SubmitTool() {
           </p>
 
           <form onSubmit={handleSubmit} className="w-full space-y-6">
+            {/* Submitter Name */}
+            <div className="flex flex-col gap-2">
+              <label htmlFor="submitterName" className="font-source-code text-[14px] text-white">
+                Your Name <span className="text-orange-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="submitterName"
+                name="submitterName"
+                required
+                value={formData.submitterName}
+                onChange={handleChange}
+                className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors"
+                placeholder="John Doe"
+              />
+            </div>
+
+            {/* Submitter Email */}
+            <div className="flex flex-col gap-2">
+              <label htmlFor="submitterEmail" className="font-source-code text-[14px] text-white">
+                Your Email <span className="text-orange-500">*</span>
+              </label>
+              <input
+                type="email"
+                id="submitterEmail"
+                name="submitterEmail"
+                required
+                value={formData.submitterEmail}
+                onChange={handleChange}
+                className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors"
+                placeholder="your.email@example.com"
+              />
+              <p className="text-white/60 font-source-sans text-[12px]">
+                We&apos;ll notify you when your submission is approved.
+              </p>
+            </div>
+
             {/* Tool Name */}
             <div className="flex flex-col gap-2">
               <label htmlFor="toolName" className="font-source-code text-[14px] text-white">
@@ -151,6 +200,24 @@ export default function SubmitTool() {
                 className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors"
                 placeholder="https://example.com"
               />
+            </div>
+
+            {/* Icon Type */}
+            <div className="flex flex-col gap-2">
+              <label htmlFor="icon" className="font-source-code text-[14px] text-white">
+                Tool Type <span className="text-orange-500">*</span>
+              </label>
+              <select
+                id="icon"
+                name="icon"
+                required
+                value={formData.icon}
+                onChange={handleChange}
+                className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors"
+              >
+                <option value="gemini">Gemini (AI Tool)</option>
+                <option value="miro">Miro (Template/Board)</option>
+              </select>
             </div>
 
             {/* Step Dropdown */}
@@ -206,26 +273,6 @@ export default function SubmitTool() {
                 className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors resize-vertical"
                 placeholder="Any specific instructions or tips for using this tool in this context..."
               />
-            </div>
-
-            {/* Submitter Email */}
-            <div className="flex flex-col gap-2">
-              <label htmlFor="submitterEmail" className="font-source-code text-[14px] text-white">
-                Your Email <span className="text-orange-500">*</span>
-              </label>
-              <input
-                type="email"
-                id="submitterEmail"
-                name="submitterEmail"
-                required
-                value={formData.submitterEmail}
-                onChange={handleChange}
-                className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors"
-                placeholder="your.email@example.com"
-              />
-              <p className="text-white/60 font-source-sans text-[12px]">
-                We&apos;ll notify you when your submission is approved.
-              </p>
             </div>
 
             {/* Submit Button */}

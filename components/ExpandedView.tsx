@@ -1,4 +1,6 @@
 import { useEffect, useRef } from "react";
+import Link from "next/link";
+import { Plus } from "lucide-react";
 import type { Phase, Tool } from "@/types";
 import ToolLink from "./ToolLink";
 
@@ -43,9 +45,18 @@ export default function ExpandedView({ phase, onToolClick }: ExpandedViewProps) 
                   />
                 ))
               ) : (
-                <p className="text-white/40 font-source-sans text-[14px] italic">
-                  Tools coming soon...
-                </p>
+                <div className="flex flex-col gap-3 p-4 bg-navy-700 border border-orange-500/30 rounded w-full">
+                  <p className="text-white/60 font-source-sans text-[14px]">
+                    No tools available yet in this section.
+                  </p>
+                  <Link
+                    href="/submit"
+                    className="flex items-center gap-2 text-orange-500 hover:text-orange-400 font-source-sans text-[14px] font-medium transition-colors"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Submit a tool for {section.title}
+                  </Link>
+                </div>
               )}
             </div>
           </div>

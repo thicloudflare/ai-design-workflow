@@ -9,6 +9,12 @@ import {
   handleSections,
   handleHealth,
 } from './api-routes.js';
+import {
+  getPendingSubmissions,
+  getSubmissionStats,
+  approveSubmission,
+  rejectSubmission,
+} from './api-admin.js';
 
 /**
  * Cloudflare Workers script to serve static Next.js site

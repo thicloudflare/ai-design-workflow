@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Check, X, ExternalLink, Sparkles } from "lucide-react";
+import { Check, X, ExternalLink, Sparkles, Eye, EyeOff, Trash2 } from "lucide-react";
 import Navigation from "@/components/Navigation";
 
 interface Submission {
@@ -20,8 +20,23 @@ interface Submission {
   status: string;
 }
 
+interface ApprovedTool {
+  id: number;
+  name: string;
+  url: string;
+  description: string;
+  icon: "gemini" | "miro";
+  phase_number: number;
+  phase_title: string;
+  section_title: string;
+  visible: number;
+  approved_at: string;
+}
+
 export default function AdminSubmissions() {
+  const [activeTab, setActiveTab] = useState<"pending" | "all">("pending");
   const [submissions, setSubmissions] = useState<Submission[]>([]);
+  const [allTools, setAllTools] = useState<ApprovedTool[]>([]);
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [password, setPassword] = useState("");
@@ -30,6 +45,7 @@ export default function AdminSubmissions() {
   useEffect(() => {
     if (isAuthenticated) {
       loadSubmissions();
+      loadAllTools();
       loadStats();
     }
   }, [isAuthenticated]);
@@ -50,6 +66,18 @@ export default function AdminSubmissions() {
       alert(`Network error: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadAllTools = async () => {
+    try {
+      const response = await fetch("/api/admin/tools");
+      const data = await response.json();
+      if (data.success) {
+        setAllTools(data.data);
+      }
+    } catch (error) {
+      console.error("Failed to load tools:", error);
     }
   };
 
@@ -87,12 +115,74 @@ export default function AdminSubmissions() {
             : "Approved! (No GitHub PR created - configure GITHUB_TOKEN)"
         );
         loadSubmissions();
+        loadAllTools();
         loadStats();
       } else {
         alert(`Failed to approve: ${data.error}`);
       }
     } catch (error) {
       alert("Failed to approve submission");
+    }
+  };
+
+  const handleHide = async (toolId: number) => {
+    try {
+      const response = await fetch("/api/admin/tools/hide", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ toolId, adminPassword: password }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        loadAllTools();
+      } else {
+        alert(`Failed: ${data.error}`);
+      }
+    } catch (error) {
+      alert("Failed to hide tool");
+    }
+  };
+
+  const handleShow = async (toolId: number) => {
+    try {
+      const response = await fetch("/api/admin/tools/show", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ toolId, adminPassword: password }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        loadAllTools();
+      } else {
+        alert(`Failed: ${data.error}`);
+      }
+    } catch (error) {
+      alert("Failed to show tool");
+    }
+  };
+
+  const handleDelete = async (toolId: number, toolName: string) => {
+    if (!confirm(`Are you sure you want to permanently delete "${toolName}"?`)) {
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/admin/tools/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ toolId, adminPassword: password }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        loadAllTools();
+      } else {
+        alert(`Failed: ${data.error}`);
+      }
+    } catch (error) {
+      alert("Failed to delete tool");
     }
   };
 
@@ -165,7 +255,7 @@ export default function AdminSubmissions() {
 
         <div className="max-w-6xl mx-auto w-full space-y-8">
           <div className="flex items-center justify-between">
-            <h1 className="text-4xl font-bold">Tool Submissions</h1>
+            <h1 className="text-4xl font-bold">Tool Management</h1>
             <button
               onClick={() => {
                 setIsAuthenticated(false);
@@ -177,8 +267,32 @@ export default function AdminSubmissions() {
             </button>
           </div>
 
+          {/* Tabs */}
+          <div className="flex gap-2 border-b border-white/20">
+            <button
+              onClick={() => setActiveTab("pending")}
+              className={`px-6 py-3 font-medium transition-colors ${
+                activeTab === "pending"
+                  ? "border-b-2 border-orange-500 text-orange-500"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              Pending Approval ({submissions.length})
+            </button>
+            <button
+              onClick={() => setActiveTab("all")}
+              className={`px-6 py-3 font-medium transition-colors ${
+                activeTab === "all"
+                  ? "border-b-2 border-orange-500 text-orange-500"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              All Tools ({allTools.length})
+            </button>
+          </div>
+
           {/* Stats */}
-          {stats && (
+          {stats && activeTab === "pending" && (
             <div className="grid grid-cols-3 gap-4">
               {stats.byStatus?.map((stat: any) => (
                 <div
@@ -192,13 +306,14 @@ export default function AdminSubmissions() {
             </div>
           )}
 
-          {/* Submissions List */}
-          {loading ? (
-            <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div>
-            </div>
-          ) : submissions.length === 0 ? (
-            <div className="text-center py-12 text-white/60">
+          {/* Tab Content */}
+          {activeTab === "pending" ? (
+            loading ? (
+              <div className="text-center py-12">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div>
+              </div>
+            ) : submissions.length === 0 ? (
+              <div className="text-center py-12 text-white/60">
               No pending submissions
             </div>
           ) : (
@@ -268,6 +383,92 @@ export default function AdminSubmissions() {
                         title="Reject"
                       >
                         <X className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )
+          ) : (
+            <div className="space-y-4">
+              {allTools.map((tool) => (
+                <div
+                  key={tool.id}
+                  className={`bg-navy-800 border rounded-lg p-6 transition-all ${
+                    tool.visible === 1
+                      ? "border-white/20"
+                      : "border-orange-500/30 opacity-60"
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        {tool.icon === "gemini" ? (
+                          <Sparkles className="w-5 h-5 text-purple-400" />
+                        ) : (
+                          <ExternalLink className="w-5 h-5 text-blue-400" />
+                        )}
+                        <h3 className="text-xl font-bold">{tool.name}</h3>
+                        {tool.visible === 0 && (
+                          <span className="text-xs bg-orange-500/20 text-orange-400 px-2 py-1 rounded">
+                            Hidden
+                          </span>
+                        )}
+                      </div>
+
+                      <a
+                        href={tool.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-orange-500 hover:text-orange-400 text-sm flex items-center gap-1 mb-3"
+                      >
+                        {tool.url}
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+
+                      {tool.description && (
+                        <p className="text-white/80 mb-3">{tool.description}</p>
+                      )}
+
+                      <div className="flex flex-wrap gap-2 text-sm">
+                        <span className="bg-orange-500/20 text-orange-400 px-3 py-1 rounded">
+                          Phase {tool.phase_number}: {tool.phase_title}
+                        </span>
+                        <span className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded">
+                          {tool.section_title}
+                        </span>
+                      </div>
+
+                      <div className="mt-3 text-xs text-white/40">
+                        Approved: {new Date(tool.approved_at).toLocaleString()}
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2">
+                      {tool.visible === 1 ? (
+                        <button
+                          onClick={() => handleHide(tool.id)}
+                          className="bg-orange-600 hover:bg-orange-700 text-white p-3 rounded transition-colors"
+                          title="Hide from public"
+                        >
+                          <EyeOff className="w-5 h-5" />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleShow(tool.id)}
+                          className="bg-green-600 hover:bg-green-700 text-white p-3 rounded transition-colors"
+                          title="Show to public"
+                        >
+                          <Eye className="w-5 h-5" />
+                        </button>
+                      )}
+                      <button
+                        onClick={() => handleDelete(tool.id, tool.name)}
+                        className="bg-red-600 hover:bg-red-700 text-white p-3 rounded transition-colors"
+                        title="Delete permanently"
+                      >
+                        <Trash2 className="w-5 h-5" />
                       </button>
                     </div>
                   </div>

@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Check, X, ExternalLink, Sparkles, Eye, EyeOff, Trash2 } from "lucide-react";
+import { Check, X, ExternalLink, Sparkles, Eye, EyeOff, Trash2, Plus, Edit, Save } from "lucide-react";
 import Navigation from "@/components/Navigation";
+import { phases as staticPhases } from "@/data/phases";
 
 interface Submission {
   id: number;
@@ -34,6 +35,8 @@ interface ApprovedTool {
   source?: "static" | "submitted";
 }
 
+const ICON_OPTIONS = ["gemini", "miro"] as const;
+
 export default function AdminSubmissions() {
   const [activeTab, setActiveTab] = useState<"pending" | "all">("pending");
   const [submissions, setSubmissions] = useState<Submission[]>([]);
@@ -42,6 +45,17 @@ export default function AdminSubmissions() {
   const [loading, setLoading] = useState(true);
   const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [editingToolId, setEditingToolId] = useState<number | string | null>(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    url: "",
+    description: "",
+    icon: "gemini" as "gemini" | "miro",
+    phase_number: 1,
+    phase_title: "",
+    section_title: "",
+  });
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -202,6 +216,109 @@ export default function AdminSubmissions() {
     }
   };
 
+  const handleAddTool = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("/api/admin/tools/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ toolData: formData, adminPassword: password }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        alert("Tool added successfully!");
+        setShowAddForm(false);
+        setFormData({
+          name: "",
+          url: "",
+          description: "",
+          icon: "gemini",
+          phase_number: 1,
+          phase_title: "",
+          section_title: "",
+        });
+        loadAllTools();
+      } else {
+        alert(`Failed: ${data.error}`);
+      }
+    } catch (error) {
+      alert("Failed to add tool");
+    }
+  };
+
+  const handleEditTool = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!editingToolId || typeof editingToolId === 'string') return;
+
+    try {
+      const response = await fetch("/api/admin/tools/edit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          toolId: editingToolId, 
+          toolData: formData, 
+          adminPassword: password 
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        alert("Tool updated successfully!");
+        setEditingToolId(null);
+        setFormData({
+          name: "",
+          url: "",
+          description: "",
+          icon: "gemini",
+          phase_number: 1,
+          phase_title: "",
+          section_title: "",
+        });
+        loadAllTools();
+      } else {
+        alert(`Failed: ${data.error}`);
+      }
+    } catch (error) {
+      alert("Failed to update tool");
+    }
+  };
+
+  const startEditTool = (tool: ApprovedTool) => {
+    if (typeof tool.id === 'string') {
+      alert("Cannot edit static tools from homepage");
+      return;
+    }
+
+    setEditingToolId(tool.id);
+    setFormData({
+      name: tool.name,
+      url: tool.url,
+      description: tool.description || "",
+      icon: tool.icon,
+      phase_number: tool.phase_number,
+      phase_title: tool.phase_title,
+      section_title: tool.section_title,
+    });
+    setShowAddForm(true);
+  };
+
+  const cancelForm = () => {
+    setShowAddForm(false);
+    setEditingToolId(null);
+    setFormData({
+      name: "",
+      url: "",
+      description: "",
+      icon: "gemini",
+      phase_number: 1,
+      phase_title: "",
+      section_title: "",
+    });
+  };
+
   const handleReject = async (submissionId: number) => {
     if (!password) {
       alert("Please enter admin password");
@@ -284,27 +401,38 @@ export default function AdminSubmissions() {
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-2 border-b border-white/20">
-            <button
-              onClick={() => setActiveTab("pending")}
-              className={`px-6 py-3 font-medium transition-colors ${
-                activeTab === "pending"
-                  ? "border-b-2 border-orange-500 text-orange-500"
-                  : "text-white/60 hover:text-white"
-              }`}
-            >
-              Pending Approval ({submissions.length})
-            </button>
-            <button
-              onClick={() => setActiveTab("all")}
-              className={`px-6 py-3 font-medium transition-colors ${
-                activeTab === "all"
-                  ? "border-b-2 border-orange-500 text-orange-500"
-                  : "text-white/60 hover:text-white"
-              }`}
-            >
-              All Tools ({allTools.length})
-            </button>
+          <div className="flex justify-between items-center border-b border-white/20">
+            <div className="flex gap-2">
+              <button
+                onClick={() => setActiveTab("pending")}
+                className={`px-6 py-3 font-medium transition-colors ${
+                  activeTab === "pending"
+                    ? "border-b-2 border-orange-500 text-orange-500"
+                    : "text-white/60 hover:text-white"
+                }`}
+              >
+                Pending Approval ({submissions.length})
+              </button>
+              <button
+                onClick={() => setActiveTab("all")}
+                className={`px-6 py-3 font-medium transition-colors ${
+                  activeTab === "all"
+                    ? "border-b-2 border-orange-500 text-orange-500"
+                    : "text-white/60 hover:text-white"
+                }`}
+              >
+                All Tools ({allTools.length})
+              </button>
+            </div>
+            {activeTab === "all" && (
+              <button
+                onClick={() => setShowAddForm(true)}
+                className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded font-medium transition-colors"
+              >
+                <Plus className="w-4 h-4" />
+                Add Tool
+              </button>
+            )}
           </div>
 
           {/* Stats */}
@@ -319,6 +447,122 @@ export default function AdminSubmissions() {
                   <div className="text-white/60 capitalize">{stat.status}</div>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* Add/Edit Tool Form */}
+          {showAddForm && (
+            <div className="bg-navy-800 border border-orange-500/30 rounded-lg p-6">
+              <h2 className="text-2xl font-bold mb-4">
+                {editingToolId ? "Edit Tool" : "Add New Tool"}
+              </h2>
+              <form onSubmit={editingToolId ? handleEditTool : handleAddTool} className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Tool Name *</label>
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full bg-navy-700 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Tool URL *</label>
+                    <input
+                      type="url"
+                      value={formData.url}
+                      onChange={(e) => setFormData({ ...formData, url: e.target.value })}
+                      className="w-full bg-navy-700 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Description</label>
+                  <textarea
+                    value={formData.description}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    className="w-full bg-navy-700 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500 h-24"
+                  />
+                </div>
+
+                <div className="grid grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Icon *</label>
+                    <select
+                      value={formData.icon}
+                      onChange={(e) => setFormData({ ...formData, icon: e.target.value as "gemini" | "miro" })}
+                      className="w-full bg-navy-700 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500"
+                      required
+                    >
+                      {ICON_OPTIONS.map((icon) => (
+                        <option key={icon} value={icon}>{icon}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Phase *</label>
+                    <select
+                      value={formData.phase_number}
+                      onChange={(e) => {
+                        const phaseNum = parseInt(e.target.value);
+                        const phase = staticPhases.find(p => p.number === phaseNum);
+                        setFormData({ 
+                          ...formData, 
+                          phase_number: phaseNum,
+                          phase_title: phase?.title || "",
+                          section_title: ""
+                        });
+                      }}
+                      className="w-full bg-navy-700 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500"
+                      required
+                    >
+                      {staticPhases.map((phase) => (
+                        <option key={phase.number} value={phase.number}>
+                          {phase.number}. {phase.title}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Section *</label>
+                    <select
+                      value={formData.section_title}
+                      onChange={(e) => setFormData({ ...formData, section_title: e.target.value })}
+                      className="w-full bg-navy-700 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500"
+                      required
+                    >
+                      <option value="">Select section</option>
+                      {staticPhases
+                        .find(p => p.number === formData.phase_number)
+                        ?.sections.map((section) => (
+                          <option key={section.title} value={section.title}>
+                            {section.title}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 pt-4">
+                  <button
+                    type="submit"
+                    className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded font-medium transition-colors"
+                  >
+                    {editingToolId ? "Update Tool" : "Add Tool"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={cancelForm}
+                    className="flex-1 bg-navy-700 hover:bg-navy-600 text-white py-3 rounded font-medium transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
             </div>
           )}
 
@@ -473,6 +717,13 @@ export default function AdminSubmissions() {
                     <div className="flex gap-2">
                       {tool.source === 'submitted' && (
                         <>
+                          <button
+                            onClick={() => startEditTool(tool)}
+                            className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded transition-colors"
+                            title="Edit tool"
+                          >
+                            <Edit className="w-5 h-5" />
+                          </button>
                           {tool.visible === 1 ? (
                             <button
                               onClick={() => handleHide(tool.id)}

@@ -475,6 +475,126 @@ async function deleteToolById(request, env) {
   }
 }
 
+// Add tool manually
+async function addToolManually(request, env) {
+  if (!env.DB) {
+    return new Response(JSON.stringify({ error: 'Database not configured' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  try {
+    const { toolData, adminPassword } = await request.json();
+
+    if (adminPassword !== env.ADMIN_PASSWORD) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Validate required fields
+    if (!toolData.name || !toolData.url || !toolData.phase_number || !toolData.section_title || !toolData.icon) {
+      return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    await env.DB.prepare(
+      `INSERT INTO approved_tools (
+        name, url, description, icon, phase_number, phase_title, 
+        section_title, visible
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+    ).bind(
+      toolData.name,
+      toolData.url,
+      toolData.description || null,
+      toolData.icon,
+      toolData.phase_number,
+      toolData.phase_title,
+      toolData.section_title,
+      1
+    ).run();
+
+    return new Response(JSON.stringify({
+      success: true,
+      message: 'Tool added successfully',
+    }), {
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({
+      error: 'Failed to add tool',
+      details: error.message,
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}
+
+// Edit tool
+async function editToolById(request, env) {
+  if (!env.DB) {
+    return new Response(JSON.stringify({ error: 'Database not configured' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  try {
+    const { toolId, toolData, adminPassword } = await request.json();
+
+    if (adminPassword !== env.ADMIN_PASSWORD) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Validate required fields
+    if (!toolData.name || !toolData.url || !toolData.phase_number || !toolData.section_title || !toolData.icon) {
+      return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    await env.DB.prepare(
+      `UPDATE approved_tools SET 
+        name = ?, url = ?, description = ?, icon = ?, 
+        phase_number = ?, phase_title = ?, section_title = ?
+      WHERE id = ?`
+    ).bind(
+      toolData.name,
+      toolData.url,
+      toolData.description || null,
+      toolData.icon,
+      toolData.phase_number,
+      toolData.phase_title,
+      toolData.section_title,
+      toolId
+    ).run();
+
+    return new Response(JSON.stringify({
+      success: true,
+      message: 'Tool updated successfully',
+    }), {
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({
+      error: 'Failed to update tool',
+      details: error.message,
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}
+
 // ===== API ROUTES HANDLERS =====
 async function handlePhases(request, env) {
   const { searchParams } = new URL(request.url);
@@ -695,6 +815,14 @@ export default {
 
       if (url.pathname === '/api/admin/tools/delete' && request.method === 'POST') {
         return deleteToolById(request, env);
+      }
+
+      if (url.pathname === '/api/admin/tools/add' && request.method === 'POST') {
+        return addToolManually(request, env);
+      }
+
+      if (url.pathname === '/api/admin/tools/edit' && request.method === 'POST') {
+        return editToolById(request, env);
       }
 
       return new Response(JSON.stringify({ error: 'Not Found' }), { 

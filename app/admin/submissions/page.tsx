@@ -21,7 +21,7 @@ interface Submission {
 }
 
 interface ApprovedTool {
-  id: number;
+  id: number | string;
   name: string;
   url: string;
   description: string;
@@ -30,7 +30,8 @@ interface ApprovedTool {
   phase_title: string;
   section_title: string;
   visible: number;
-  approved_at: string;
+  approved_at: string | null;
+  source?: "static" | "submitted";
 }
 
 export default function AdminSubmissions() {
@@ -125,7 +126,12 @@ export default function AdminSubmissions() {
     }
   };
 
-  const handleHide = async (toolId: number) => {
+  const handleHide = async (toolId: number | string) => {
+    if (typeof toolId === 'string') {
+      alert("Cannot hide static tools from homepage");
+      return;
+    }
+
     try {
       const response = await fetch("/api/admin/tools/hide", {
         method: "POST",
@@ -144,7 +150,12 @@ export default function AdminSubmissions() {
     }
   };
 
-  const handleShow = async (toolId: number) => {
+  const handleShow = async (toolId: number | string) => {
+    if (typeof toolId === 'string') {
+      alert("Cannot modify static tools");
+      return;
+    }
+
     try {
       const response = await fetch("/api/admin/tools/show", {
         method: "POST",
@@ -163,7 +174,12 @@ export default function AdminSubmissions() {
     }
   };
 
-  const handleDelete = async (toolId: number, toolName: string) => {
+  const handleDelete = async (toolId: number | string, toolName: string) => {
+    if (typeof toolId === 'string') {
+      alert("Cannot delete static tools from homepage");
+      return;
+    }
+
     if (!confirm(`Are you sure you want to permanently delete "${toolName}"?`)) {
       return;
     }
@@ -410,6 +426,11 @@ export default function AdminSubmissions() {
                           <ExternalLink className="w-5 h-5 text-blue-400" />
                         )}
                         <h3 className="text-xl font-bold">{tool.name}</h3>
+                        {tool.source === 'static' && (
+                          <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">
+                            Homepage
+                          </span>
+                        )}
                         {tool.visible === 0 && (
                           <span className="text-xs bg-orange-500/20 text-orange-400 px-2 py-1 rounded">
                             Hidden
@@ -441,35 +462,43 @@ export default function AdminSubmissions() {
                       </div>
 
                       <div className="mt-3 text-xs text-white/40">
-                        Approved: {new Date(tool.approved_at).toLocaleString()}
+                        {tool.approved_at ? (
+                          <>Approved: {new Date(tool.approved_at).toLocaleString()}</>
+                        ) : (
+                          <>Static homepage tool</>
+                        )}
                       </div>
                     </div>
 
                     <div className="flex gap-2">
-                      {tool.visible === 1 ? (
-                        <button
-                          onClick={() => handleHide(tool.id)}
-                          className="bg-orange-600 hover:bg-orange-700 text-white p-3 rounded transition-colors"
-                          title="Hide from public"
-                        >
-                          <EyeOff className="w-5 h-5" />
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => handleShow(tool.id)}
-                          className="bg-green-600 hover:bg-green-700 text-white p-3 rounded transition-colors"
-                          title="Show to public"
-                        >
-                          <Eye className="w-5 h-5" />
-                        </button>
+                      {tool.source === 'submitted' && (
+                        <>
+                          {tool.visible === 1 ? (
+                            <button
+                              onClick={() => handleHide(tool.id)}
+                              className="bg-orange-600 hover:bg-orange-700 text-white p-3 rounded transition-colors"
+                              title="Hide from public"
+                            >
+                              <EyeOff className="w-5 h-5" />
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleShow(tool.id)}
+                              className="bg-green-600 hover:bg-green-700 text-white p-3 rounded transition-colors"
+                              title="Show to public"
+                            >
+                              <Eye className="w-5 h-5" />
+                            </button>
+                          )}
+                          <button
+                            onClick={() => handleDelete(tool.id, tool.name)}
+                            className="bg-red-600 hover:bg-red-700 text-white p-3 rounded transition-colors"
+                            title="Delete permanently"
+                          >
+                            <Trash2 className="w-5 h-5" />
+                          </button>
+                        </>
                       )}
-                      <button
-                        onClick={() => handleDelete(tool.id, tool.name)}
-                        className="bg-red-600 hover:bg-red-700 text-white p-3 rounded transition-colors"
-                        title="Delete permanently"
-                      >
-                        <Trash2 className="w-5 h-5" />
-                      </button>
                     </div>
                   </div>
                 </div>

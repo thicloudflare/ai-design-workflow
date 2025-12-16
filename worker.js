@@ -303,36 +303,56 @@ async function rejectSubmission(request, env) {
   }
 }
 
-// Get all approved tools
+// Get all approved tools (includes static tools from homepage)
 async function getAllApprovedTools(env) {
-  if (!env.DB) {
-    return new Response(JSON.stringify({ error: 'Database not configured' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
+  const allTools = [];
+
+  // First, add all static tools from phases
+  phases.forEach(phase => {
+    phase.sections.forEach(section => {
+      section.tools.forEach(tool => {
+        allTools.push({
+          id: `static-${phase.number}-${section.title}-${tool.name}`,
+          name: tool.name,
+          url: tool.url,
+          description: tool.description || '',
+          icon: tool.icon,
+          phase_number: phase.number,
+          phase_title: phase.title,
+          section_title: section.title,
+          visible: 1,
+          approved_at: null,
+          source: 'static'
+        });
+      });
     });
+  });
+
+  // Then add approved tools from database
+  if (env.DB) {
+    try {
+      const { results } = await env.DB.prepare(
+        `SELECT * FROM approved_tools ORDER BY approved_at DESC`
+      ).all();
+
+      results.forEach(tool => {
+        allTools.push({
+          ...tool,
+          source: 'submitted'
+        });
+      });
+    } catch (error) {
+      console.error('Error fetching approved tools:', error);
+    }
   }
 
-  try {
-    const { results } = await env.DB.prepare(
-      `SELECT * FROM approved_tools ORDER BY approved_at DESC`
-    ).all();
-
-    return new Response(JSON.stringify({
-      success: true,
-      data: results,
-      count: results.length,
-    }), {
-      headers: { 'Content-Type': 'application/json' },
-    });
-  } catch (error) {
-    return new Response(JSON.stringify({
-      error: 'Failed to fetch tools',
-      details: error.message,
-    }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
+  return new Response(JSON.stringify({
+    success: true,
+    data: allTools,
+    count: allTools.length,
+  }), {
+    headers: { 'Content-Type': 'application/json' },
+  });
 }
 
 // Hide tool

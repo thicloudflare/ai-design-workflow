@@ -62,7 +62,7 @@ export default function SubmitTool() {
           toolName: formData.toolName,
           toolUrl: formData.url,
           description: formData.description,
-          icon: formData.icon,
+          icon: "gemini",
           phaseNumber: phaseNumber,
           phaseTitle: phase?.title || formData.step,
           sectionTitle: formData.substep,

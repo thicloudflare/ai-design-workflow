@@ -38,11 +38,16 @@ export default function AdminSubmissions() {
     try {
       const response = await fetch("/api/admin/submissions");
       const data = await response.json();
+      console.log("Submissions response:", data);
       if (data.success) {
         setSubmissions(data.data);
+      } else {
+        console.error("Failed to load submissions:", data);
+        alert(`Error: ${data.error || 'Unknown error'}`);
       }
     } catch (error) {
       console.error("Failed to load submissions:", error);
+      alert(`Network error: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setLoading(false);
     }

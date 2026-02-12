@@ -357,21 +357,21 @@ export default function AdminSubmissions() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-navy-900 text-white flex items-center justify-center p-8">
-        <div className="bg-navy-800 border border-orange-500/30 rounded-lg p-8 max-w-md w-full">
-          <h1 className="text-2xl font-bold mb-6 text-center">Admin Login</h1>
+      <div className="min-h-screen bg-kumo-base text-text-default flex items-center justify-center p-8">
+        <div className="bg-kumo-elevated border border-kumo-brand/30 rounded-lg p-8 max-w-md w-full">
+          <h1 className="text-2xl font-semibold mb-6 text-center">Admin Login</h1>
           <form onSubmit={handleLogin} className="space-y-4">
             <input
               type="password"
               placeholder="Admin Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-navy-700 border border-white/20 rounded px-4 py-3 text-white focus:outline-none focus:border-orange-500"
+              className="w-full bg-kumo-recessed border border-kumo-line rounded-lg px-4 py-3 text-text-default focus:outline-none focus:border-kumo-brand focus:ring-1 focus:ring-kumo-brand"
               required
             />
             <button
               type="submit"
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded font-medium"
+              className="w-full bg-kumo-brand hover:bg-kumo-brand-hover text-white py-3 rounded-lg font-medium"
             >
               Login
             </button>
@@ -382,33 +382,33 @@ export default function AdminSubmissions() {
   }
 
   return (
-    <div className="min-h-screen bg-navy-900 text-white">
+    <div className="min-h-screen bg-kumo-base text-text-default">
       <main className="flex flex-col gap-8 p-8">
         <Navigation />
 
         <div className="max-w-6xl mx-auto w-full space-y-8">
           <div className="flex items-center justify-between">
-            <h1 className="text-4xl font-bold">Tool Management</h1>
+            <h1 className="text-4xl font-semibold">Tool Management</h1>
             <button
               onClick={() => {
                 setIsAuthenticated(false);
                 setPassword("");
               }}
-              className="text-white/60 hover:text-white text-sm"
+              className="text-text-subtle hover:text-text-default text-sm"
             >
               Logout
             </button>
           </div>
 
           {/* Tabs */}
-          <div className="flex justify-between items-center border-b border-white/20">
+          <div className="flex justify-between items-center border-b border-kumo-line">
             <div className="flex gap-2">
               <button
                 onClick={() => setActiveTab("pending")}
                 className={`px-6 py-3 font-medium transition-colors ${
                   activeTab === "pending"
-                    ? "border-b-2 border-orange-500 text-orange-500"
-                    : "text-white/60 hover:text-white"
+                    ? "border-b-2 border-kumo-brand text-kumo-brand-text"
+                    : "text-text-subtle hover:text-text-default"
                 }`}
               >
                 Pending Approval ({submissions.length})
@@ -417,8 +417,8 @@ export default function AdminSubmissions() {
                 onClick={() => setActiveTab("all")}
                 className={`px-6 py-3 font-medium transition-colors ${
                   activeTab === "all"
-                    ? "border-b-2 border-orange-500 text-orange-500"
-                    : "text-white/60 hover:text-white"
+                    ? "border-b-2 border-kumo-brand text-kumo-brand-text"
+                    : "text-text-subtle hover:text-text-default"
                 }`}
               >
                 All Tools ({allTools.length})
@@ -427,7 +427,7 @@ export default function AdminSubmissions() {
             {activeTab === "all" && (
               <button
                 onClick={() => setShowAddForm(true)}
-                className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded font-medium transition-colors"
+                className="flex items-center gap-2 bg-kumo-brand hover:bg-kumo-brand-hover text-white px-4 py-2 rounded-lg font-medium transition-colors"
               >
                 <Plus className="w-4 h-4" />
                 Add Tool
@@ -441,10 +441,10 @@ export default function AdminSubmissions() {
               {stats.byStatus?.map((stat: any) => (
                 <div
                   key={stat.status}
-                  className="bg-navy-800 border border-white/20 rounded p-4"
+                  className="bg-kumo-elevated border border-kumo-line rounded-lg p-4"
                 >
-                  <div className="text-2xl font-bold">{stat.count}</div>
-                  <div className="text-white/60 capitalize">{stat.status}</div>
+                  <div className="text-2xl font-semibold">{stat.count}</div>
+                  <div className="text-text-subtle capitalize">{stat.status}</div>
                 </div>
               ))}
             </div>
@@ -452,8 +452,8 @@ export default function AdminSubmissions() {
 
           {/* Add/Edit Tool Form */}
           {showAddForm && (
-            <div className="bg-navy-800 border border-orange-500/30 rounded-lg p-6">
-              <h2 className="text-2xl font-bold mb-4">
+            <div className="bg-kumo-elevated border border-kumo-brand/30 rounded-lg p-6">
+              <h2 className="text-2xl font-semibold mb-4">
                 {editingToolId ? "Edit Tool" : "Add New Tool"}
               </h2>
               <form onSubmit={editingToolId ? handleEditTool : handleAddTool} className="space-y-4">
@@ -464,7 +464,7 @@ export default function AdminSubmissions() {
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-navy-800 border border-white/20 rounded px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-orange-500"
+                      className="w-full bg-kumo-recessed border border-kumo-line rounded-lg px-4 py-2 text-text-default placeholder-text-inactive focus:outline-none focus:border-kumo-brand"
                       required
                       placeholder="Enter tool name"
                     />
@@ -475,7 +475,7 @@ export default function AdminSubmissions() {
                       type="url"
                       value={formData.url}
                       onChange={(e) => setFormData({ ...formData, url: e.target.value })}
-                      className="w-full bg-navy-800 border border-white/20 rounded px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-orange-500"
+                      className="w-full bg-kumo-recessed border border-kumo-line rounded-lg px-4 py-2 text-text-default placeholder-text-inactive focus:outline-none focus:border-kumo-brand"
                       required
                       placeholder="https://example.com"
                     />
@@ -487,7 +487,7 @@ export default function AdminSubmissions() {
                   <textarea
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full bg-navy-800 border border-white/20 rounded px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-orange-500 h-24"
+                    className="w-full bg-kumo-recessed border border-kumo-line rounded-lg px-4 py-2 text-text-default placeholder-text-inactive focus:outline-none focus:border-kumo-brand h-24"
                     placeholder="Enter tool description"
                   />
                 </div>
@@ -498,7 +498,7 @@ export default function AdminSubmissions() {
                     <select
                       value={formData.icon}
                       onChange={(e) => setFormData({ ...formData, icon: e.target.value as "gemini" | "miro" })}
-                      className="w-full bg-navy-800 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500"
+                      className="w-full bg-kumo-recessed border border-kumo-line rounded-lg px-4 py-2 text-text-default focus:outline-none focus:border-kumo-brand"
                       required
                     >
                       {ICON_OPTIONS.map((icon) => (
@@ -520,7 +520,7 @@ export default function AdminSubmissions() {
                           section_title: ""
                         });
                       }}
-                      className="w-full bg-navy-800 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500"
+                      className="w-full bg-kumo-recessed border border-kumo-line rounded-lg px-4 py-2 text-text-default focus:outline-none focus:border-kumo-brand"
                       required
                     >
                       {staticPhases.map((phase) => (
@@ -535,7 +535,7 @@ export default function AdminSubmissions() {
                     <select
                       value={formData.section_title}
                       onChange={(e) => setFormData({ ...formData, section_title: e.target.value })}
-                      className="w-full bg-navy-800 border border-white/20 rounded px-4 py-2 text-white focus:outline-none focus:border-orange-500"
+                      className="w-full bg-kumo-recessed border border-kumo-line rounded-lg px-4 py-2 text-text-default focus:outline-none focus:border-kumo-brand"
                       required
                     >
                       <option value="">Select section</option>
@@ -553,14 +553,14 @@ export default function AdminSubmissions() {
                 <div className="flex gap-4 pt-4">
                   <button
                     type="submit"
-                    className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded font-medium transition-colors"
+                    className="flex-1 bg-kumo-brand hover:bg-kumo-brand-hover text-white py-3 rounded-lg font-medium transition-colors"
                   >
                     {editingToolId ? "Update Tool" : "Add Tool"}
                   </button>
                   <button
                     type="button"
                     onClick={cancelForm}
-                    className="flex-1 bg-navy-800 hover:bg-navy-900 text-white py-3 rounded font-medium transition-colors"
+                    className="flex-1 bg-kumo-tint hover:bg-kumo-interact text-text-default py-3 rounded-lg font-medium transition-colors"
                   >
                     Cancel
                   </button>
@@ -573,10 +573,10 @@ export default function AdminSubmissions() {
           {activeTab === "pending" ? (
             loading ? (
               <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-kumo-brand mx-auto"></div>
               </div>
             ) : submissions.length === 0 ? (
-              <div className="text-center py-12 text-white/60">
+              <div className="text-center py-12 text-text-subtle">
               No pending submissions
             </div>
           ) : (
@@ -584,7 +584,7 @@ export default function AdminSubmissions() {
               {submissions.map((submission) => (
                 <div
                   key={submission.id}
-                  className="bg-navy-800 border border-white/20 rounded-lg p-6 space-y-4"
+                  className="bg-kumo-elevated border border-kumo-line rounded-lg p-6 space-y-4"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -592,41 +592,41 @@ export default function AdminSubmissions() {
                         {submission.icon === "gemini" ? (
                           <Sparkles className="w-5 h-5 text-purple-400" />
                         ) : (
-                          <ExternalLink className="w-5 h-5 text-blue-400" />
+                          <ExternalLink className="w-5 h-5 text-kumo-info" />
                         )}
-                        <h3 className="text-xl font-bold">{submission.name}</h3>
+                        <h3 className="text-xl font-semibold">{submission.name}</h3>
                       </div>
 
                       <a
                         href={submission.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-orange-500 hover:text-orange-400 text-sm flex items-center gap-1 mb-3"
+                        className="text-kumo-brand-text hover:text-kumo-brand text-sm flex items-center gap-1 mb-3"
                       >
                         {submission.url}
                         <ExternalLink className="w-3 h-3" />
                       </a>
 
                       {submission.description && (
-                        <p className="text-white/80 mb-3">{submission.description}</p>
+                        <p className="text-text-subtle mb-3">{submission.description}</p>
                       )}
 
                       <div className="flex flex-wrap gap-2 text-sm">
-                        <span className="bg-orange-500/20 text-orange-400 px-3 py-1 rounded">
+                        <span className="bg-kumo-brand/20 text-kumo-brand-text px-3 py-1 rounded-lg">
                           Phase {submission.phase_number}: {submission.phase_title}
                         </span>
-                        <span className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded">
+                        <span className="bg-kumo-info/20 text-kumo-info px-3 py-1 rounded-lg">
                           {submission.section_title}
                         </span>
                       </div>
 
                       {submission.use_case && (
-                        <div className="mt-3 text-sm text-white/60">
+                        <div className="mt-3 text-sm text-text-subtle">
                           <strong>Use case:</strong> {submission.use_case}
                         </div>
                       )}
 
-                      <div className="mt-3 text-xs text-white/40">
+                      <div className="mt-3 text-xs text-text-inactive">
                         Submitted by {submission.submitted_by_name || submission.submitted_by_email} on{" "}
                         {new Date(submission.submitted_at).toLocaleString()}
                       </div>
@@ -635,14 +635,14 @@ export default function AdminSubmissions() {
                     <div className="flex gap-2 ml-4">
                       <button
                         onClick={() => handleApprove(submission.id)}
-                        className="bg-green-600 hover:bg-green-700 text-white p-3 rounded transition-colors"
+                        className="bg-kumo-success hover:opacity-90 text-white p-3 rounded-lg transition-colors"
                         title="Approve"
                       >
                         <Check className="w-5 h-5" />
                       </button>
                       <button
                         onClick={() => handleReject(submission.id)}
-                        className="bg-red-600 hover:bg-red-700 text-white p-3 rounded transition-colors"
+                        className="bg-kumo-danger hover:opacity-90 text-white p-3 rounded-lg transition-colors"
                         title="Reject"
                       >
                         <X className="w-5 h-5" />
@@ -658,10 +658,10 @@ export default function AdminSubmissions() {
               {allTools.map((tool) => (
                 <div
                   key={tool.id}
-                  className={`bg-navy-800 border rounded-lg p-6 transition-all ${
+                  className={`bg-kumo-elevated border rounded-lg p-6 transition-all ${
                     tool.visible === 1
-                      ? "border-white/20"
-                      : "border-orange-500/30 opacity-60"
+                      ? "border-kumo-line"
+                      : "border-kumo-warning/30 opacity-60"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-4">
@@ -670,16 +670,16 @@ export default function AdminSubmissions() {
                         {tool.icon === "gemini" ? (
                           <Sparkles className="w-5 h-5 text-purple-400" />
                         ) : (
-                          <ExternalLink className="w-5 h-5 text-blue-400" />
+                          <ExternalLink className="w-5 h-5 text-kumo-info" />
                         )}
-                        <h3 className="text-xl font-bold">{tool.name}</h3>
+                        <h3 className="text-xl font-semibold">{tool.name}</h3>
                         {tool.source === 'static' && (
-                          <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">
+                          <span className="text-xs bg-kumo-info/20 text-kumo-info px-2 py-1 rounded-lg">
                             Homepage
                           </span>
                         )}
                         {tool.visible === 0 && (
-                          <span className="text-xs bg-orange-500/20 text-orange-400 px-2 py-1 rounded">
+                          <span className="text-xs bg-kumo-warning/20 text-kumo-warning px-2 py-1 rounded-lg">
                             Hidden
                           </span>
                         )}
@@ -689,26 +689,26 @@ export default function AdminSubmissions() {
                         href={tool.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-orange-500 hover:text-orange-400 text-sm flex items-center gap-1 mb-3"
+                        className="text-kumo-brand-text hover:text-kumo-brand text-sm flex items-center gap-1 mb-3"
                       >
                         {tool.url}
                         <ExternalLink className="w-3 h-3" />
                       </a>
 
                       {tool.description && (
-                        <p className="text-white/80 mb-3">{tool.description}</p>
+                        <p className="text-text-subtle mb-3">{tool.description}</p>
                       )}
 
                       <div className="flex flex-wrap gap-2 text-sm">
-                        <span className="bg-orange-500/20 text-orange-400 px-3 py-1 rounded">
+                        <span className="bg-kumo-brand/20 text-kumo-brand-text px-3 py-1 rounded-lg">
                           Phase {tool.phase_number}: {tool.phase_title}
                         </span>
-                        <span className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded">
+                        <span className="bg-kumo-info/20 text-kumo-info px-3 py-1 rounded-lg">
                           {tool.section_title}
                         </span>
                       </div>
 
-                      <div className="mt-3 text-xs text-white/40">
+                      <div className="mt-3 text-xs text-text-inactive">
                         {tool.approved_at ? (
                           <>Approved: {new Date(tool.approved_at).toLocaleString()}</>
                         ) : (
@@ -720,10 +720,10 @@ export default function AdminSubmissions() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => startEditTool(tool)}
-                        className={`p-3 rounded transition-colors ${
+                        className={`p-3 rounded-lg transition-colors ${
                           tool.source === 'static' 
-                            ? 'bg-navy-600 text-white/40 cursor-not-allowed' 
-                            : 'bg-blue-600 hover:bg-blue-700 text-white'
+                            ? 'bg-kumo-tint text-text-inactive cursor-not-allowed' 
+                            : 'bg-kumo-info hover:opacity-90 text-white'
                         }`}
                         title={tool.source === 'static' ? 'Cannot edit static tools' : 'Edit tool'}
                       >
@@ -732,10 +732,10 @@ export default function AdminSubmissions() {
                       {tool.visible === 1 ? (
                         <button
                           onClick={() => handleHide(tool.id)}
-                          className={`p-3 rounded transition-colors ${
+                          className={`p-3 rounded-lg transition-colors ${
                             tool.source === 'static'
-                              ? 'bg-navy-600 text-white/40 cursor-not-allowed'
-                              : 'bg-orange-600 hover:bg-orange-700 text-white'
+                              ? 'bg-kumo-tint text-text-inactive cursor-not-allowed'
+                              : 'bg-kumo-warning hover:opacity-90 text-white'
                           }`}
                           title={tool.source === 'static' ? 'Static tools always visible' : 'Hide from public'}
                         >
@@ -744,7 +744,7 @@ export default function AdminSubmissions() {
                       ) : (
                         <button
                           onClick={() => handleShow(tool.id)}
-                          className="bg-green-600 hover:bg-green-700 text-white p-3 rounded transition-colors"
+                          className="bg-kumo-success hover:opacity-90 text-white p-3 rounded-lg transition-colors"
                           title="Show to public"
                         >
                           <Eye className="w-5 h-5" />
@@ -752,10 +752,10 @@ export default function AdminSubmissions() {
                       )}
                       <button
                         onClick={() => handleDelete(tool.id, tool.name)}
-                        className={`p-3 rounded transition-colors ${
+                        className={`p-3 rounded-lg transition-colors ${
                           tool.source === 'static'
-                            ? 'bg-navy-600 text-white/40 cursor-not-allowed'
-                            : 'bg-red-600 hover:bg-red-700 text-white'
+                            ? 'bg-kumo-tint text-text-inactive cursor-not-allowed'
+                            : 'bg-kumo-danger hover:opacity-90 text-white'
                         }`}
                         title={tool.source === 'static' ? 'Cannot delete static tools' : 'Delete permanently'}
                       >

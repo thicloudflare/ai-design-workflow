@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
+import ThemeToggle from "@/components/ThemeToggle";
 import PhaseCard from "@/components/PhaseCard";
 import ExpandedView from "@/components/ExpandedView";
 import SidePanel from "@/components/SidePanel";
@@ -50,12 +51,18 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-navy-900 text-white">
+    <div className="min-h-screen bg-kumo-base text-text-default">
       {/* Main Content */}
       <main className="flex flex-col h-screen overflow-hidden">
         {/* Header - Sticky at top */}
-        <div className="sticky top-0 z-10 bg-navy-900 px-8 pt-8 pb-4 flex-shrink-0">
-          <Navigation />
+        <div className="sticky top-0 z-10 bg-kumo-base px-8 pt-8 pb-4 flex-shrink-0">
+          <div className="flex items-center justify-between">
+            <div className="flex-1" />
+            <Navigation />
+            <div className="flex-1 flex justify-end">
+              <ThemeToggle />
+            </div>
+          </div>
         </div>
 
         {/* Content Section */}
@@ -65,10 +72,10 @@ export default function Home() {
           <div className="w-full max-w-7xl">
             {/* Title and Description */}
             <div className="flex flex-col gap-3 items-center text-center mb-8 transition-all duration-[800ms] ease-[cubic-bezier(0.19,1,0.22,1)]">
-              <h1 className="text-[48px] font-bold text-white font-source-code leading-tight">
-                The Designer&apos;s Cheat Code: <span className="text-[#FFA60C]">AI Edition</span>
+              <h1 className="text-4xl font-semibold text-text-default leading-tight">
+                The Designer&apos;s Cheat Code: <span className="text-kumo-brand-text">AI Edition</span>
               </h1>
-              <p className="text-[16px] text-white/70 font-source-sans max-w-2xl">
+              <p className="text-lg text-text-subtle max-w-2xl">
                 A comprehensive guide for integrating AI capabilities into your design process. 
                 Select a phase below to explore AI tools and methods.
               </p>

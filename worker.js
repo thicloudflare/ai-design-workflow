@@ -4,7 +4,7 @@ import { phases } from './data/phases-data.js';
  * Consolidated Cloudflare Worker - All API handlers in one file
  */
 
-// ===== EMAIL HANDLER =====
+// ===== EMAIL HANDLERS =====
 async function sendEmail(env, submission) {
   if (!env.RESEND_API_KEY) {
     console.log('⚠️ RESEND_API_KEY not configured. Submission logged:');
@@ -45,6 +45,100 @@ Submitted via AI-Enhanced Design Workflow
     return response.ok;
   } catch (error) {
     console.error('Error sending email:', error);
+    return false;
+  }
+}
+
+async function sendApprovalEmail(env, submission) {
+  if (!env.RESEND_API_KEY) {
+    console.log('⚠️ RESEND_API_KEY not configured. Approval email skipped.');
+    return true;
+  }
+
+  const emailBody = `
+Hi ${submission.submitted_by_name || 'there'},
+
+Great news! Your tool submission has been approved and is now live on the AI Design Workflow.
+
+Tool Details:
+- Name: ${submission.name}
+- URL: ${submission.url}
+- Phase: ${submission.phase_title}
+- Section: ${submission.section_title}
+
+Your tool will now be visible to all users of the workflow. Thank you for contributing!
+
+View the live workflow: https://ai-design-workflow.thi-s-ent-account.workers.dev/
+
+---
+AI-Enhanced Design Workflow Team
+  `.trim();
+
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'onboarding@resend.dev',
+        to: submission.submitted_by_email,
+        subject: `✅ Tool Approved: ${submission.name}`,
+        text: emailBody,
+      }),
+    });
+
+    return response.ok;
+  } catch (error) {
+    console.error('Error sending approval email:', error);
+    return false;
+  }
+}
+
+async function sendRejectionEmail(env, submission, reason) {
+  if (!env.RESEND_API_KEY) {
+    console.log('⚠️ RESEND_API_KEY not configured. Rejection email skipped.');
+    return true;
+  }
+
+  const emailBody = `
+Hi ${submission.submitted_by_name || 'there'},
+
+Thank you for your tool submission. After review, we've decided not to include it in the AI Design Workflow at this time.
+
+Tool Details:
+- Name: ${submission.name}
+- URL: ${submission.url}
+- Phase: ${submission.phase_title}
+- Section: ${submission.section_title}
+
+Reason: ${reason || 'No specific reason provided'}
+
+We appreciate your contribution and encourage you to submit other tools in the future!
+
+---
+AI-Enhanced Design Workflow Team
+  `.trim();
+
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'onboarding@resend.dev',
+        to: submission.submitted_by_email,
+        subject: `Tool Submission Update: ${submission.name}`,
+        text: emailBody,
+      }),
+    });
+
+    return response.ok;
+  } catch (error) {
+    console.error('Error sending rejection email:', error);
     return false;
   }
 }
@@ -243,6 +337,9 @@ async function approveSubmission(request, env) {
       'admin'
     ).run();
 
+    // Send approval email to submitter
+    await sendApprovalEmail(env, submission);
+
     return new Response(JSON.stringify({
       success: true,
       message: 'Submission approved',
@@ -278,6 +375,18 @@ async function rejectSubmission(request, env) {
       });
     }
 
+    // Get submission details before updating
+    const submission = await env.DB.prepare(
+      `SELECT * FROM submitted_tools WHERE id = ? AND status = 'pending'`
+    ).bind(submissionId).first();
+
+    if (!submission) {
+      return new Response(JSON.stringify({ error: 'Submission not found' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     await env.DB.prepare(
       `UPDATE submitted_tools 
        SET status = 'rejected', 
@@ -285,6 +394,9 @@ async function rejectSubmission(request, env) {
            rejection_reason = ?
        WHERE id = ?`
     ).bind(reason || 'No reason provided', submissionId).run();
+
+    // Send rejection email to submitter
+    await sendRejectionEmail(env, submission, reason);
 
     return new Response(JSON.stringify({
       success: true,

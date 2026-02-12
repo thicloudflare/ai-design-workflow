@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Navigation from "@/components/Navigation";
+import ThemeToggle from "@/components/ThemeToggle";
 import CreatableSelect from "@/components/CreatableSelect";
 import { phases } from "@/data/phases";
 
@@ -100,16 +101,22 @@ export default function SubmitTool() {
   };
 
   return (
-    <div className="min-h-screen bg-navy-900 text-white">
-      <main className="flex flex-col gap-[64px] items-center p-8 min-h-screen">
-        <Navigation />
+    <div className="min-h-screen bg-kumo-base text-text-default">
+      <main className="flex flex-col gap-16 items-center p-8 min-h-screen">
+        <div className="w-full flex items-center justify-between max-w-2xl">
+          <div className="flex-1" />
+          <Navigation />
+          <div className="flex-1 flex justify-end">
+            <ThemeToggle />
+          </div>
+        </div>
 
-        <div className="flex flex-col gap-[32px] items-center w-full max-w-2xl">
-          <h1 className="text-[48px] font-bold text-center text-white font-source-code leading-normal">
+        <div className="flex flex-col gap-8 items-center w-full max-w-2xl">
+          <h1 className="text-4xl font-semibold text-center text-text-default leading-normal">
             Submit a Tool
           </h1>
 
-          <p className="text-white/80 font-source-sans text-[16px] text-center">
+          <p className="text-text-subtle text-base text-center">
             Help expand the AI-Enhanced Design Workflow by submitting tools you&apos;ve found useful.
             Your submission will be reviewed and added to the appropriate workflow stage.
           </p>
@@ -117,8 +124,8 @@ export default function SubmitTool() {
           <form onSubmit={handleSubmit} className="w-full space-y-6">
             {/* Submitter Name */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="submitterName" className="font-source-code text-[14px] text-white">
-                Your Name <span className="text-orange-500">*</span>
+              <label htmlFor="submitterName" className="text-sm font-medium text-text-default">
+                Your Name <span className="text-kumo-brand-text">*</span>
               </label>
               <input
                 type="text"
@@ -127,15 +134,15 @@ export default function SubmitTool() {
                 required
                 value={formData.submitterName}
                 onChange={handleChange}
-                className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors"
+                className="bg-kumo-elevated border border-kumo-line rounded-lg px-4 py-3 text-base text-text-default focus:outline-none focus:border-kumo-brand focus:ring-1 focus:ring-kumo-brand transition-colors"
                 placeholder="John Doe"
               />
             </div>
 
             {/* Submitter Email */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="submitterEmail" className="font-source-code text-[14px] text-white">
-                Your Email <span className="text-orange-500">*</span>
+              <label htmlFor="submitterEmail" className="text-sm font-medium text-text-default">
+                Your Email <span className="text-kumo-brand-text">*</span>
               </label>
               <input
                 type="email"
@@ -144,18 +151,18 @@ export default function SubmitTool() {
                 required
                 value={formData.submitterEmail}
                 onChange={handleChange}
-                className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors"
+                className="bg-kumo-elevated border border-kumo-line rounded-lg px-4 py-3 text-base text-text-default focus:outline-none focus:border-kumo-brand focus:ring-1 focus:ring-kumo-brand transition-colors"
                 placeholder="your.email@example.com"
               />
-              <p className="text-white/60 font-source-sans text-[12px]">
+              <p className="text-text-subtle text-xs">
                 We&apos;ll notify you when your submission is approved.
               </p>
             </div>
 
             {/* Tool Name */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="toolName" className="font-source-code text-[14px] text-white">
-                Tool Name <span className="text-orange-500">*</span>
+              <label htmlFor="toolName" className="text-sm font-medium text-text-default">
+                Tool Name <span className="text-kumo-brand-text">*</span>
               </label>
               <input
                 type="text"
@@ -164,14 +171,14 @@ export default function SubmitTool() {
                 required
                 value={formData.toolName}
                 onChange={handleChange}
-                className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors"
+                className="bg-kumo-elevated border border-kumo-line rounded-lg px-4 py-3 text-base text-text-default focus:outline-none focus:border-kumo-brand focus:ring-1 focus:ring-kumo-brand transition-colors"
                 placeholder="e.g., Figma, ChatGPT, Midjourney"
               />
             </div>
 
             {/* Description */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="description" className="font-source-code text-[14px] text-white">
+              <label htmlFor="description" className="text-sm font-medium text-text-default">
                 Description
               </label>
               <textarea
@@ -180,15 +187,15 @@ export default function SubmitTool() {
                 value={formData.description}
                 onChange={handleChange}
                 rows={4}
-                className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors resize-vertical"
+                className="bg-kumo-elevated border border-kumo-line rounded-lg px-4 py-3 text-base text-text-default focus:outline-none focus:border-kumo-brand focus:ring-1 focus:ring-kumo-brand transition-colors resize-vertical"
                 placeholder="Brief description of what the tool does and how it helps..."
               />
             </div>
 
             {/* URL */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="url" className="font-source-code text-[14px] text-white">
-                URL <span className="text-orange-500">*</span>
+              <label htmlFor="url" className="text-sm font-medium text-text-default">
+                URL <span className="text-kumo-brand-text">*</span>
               </label>
               <input
                 type="url"
@@ -197,15 +204,15 @@ export default function SubmitTool() {
                 required
                 value={formData.url}
                 onChange={handleChange}
-                className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors"
+                className="bg-kumo-elevated border border-kumo-line rounded-lg px-4 py-3 text-base text-text-default focus:outline-none focus:border-kumo-brand focus:ring-1 focus:ring-kumo-brand transition-colors"
                 placeholder="https://example.com"
               />
             </div>
 
             {/* Step Dropdown */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="step" className="font-source-code text-[14px] text-white">
-                Which Step? <span className="text-orange-500">*</span>
+              <label htmlFor="step" className="text-sm font-medium text-text-default">
+                Which Step? <span className="text-kumo-brand-text">*</span>
               </label>
               <CreatableSelect
                 id="step"
@@ -216,15 +223,15 @@ export default function SubmitTool() {
                 placeholder="Select or type to add new step..."
                 required
               />
-              <p className="text-white/60 font-source-sans text-[12px]">
+              <p className="text-text-subtle text-xs">
                 Select from the list or type to create a custom step
               </p>
             </div>
 
             {/* Substep Dropdown */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="substep" className="font-source-code text-[14px] text-white">
-                Which Substep? <span className="text-orange-500">*</span>
+              <label htmlFor="substep" className="text-sm font-medium text-text-default">
+                Which Substep? <span className="text-kumo-brand-text">*</span>
               </label>
               <CreatableSelect
                 id="substep"
@@ -236,14 +243,14 @@ export default function SubmitTool() {
                 required
                 disabled={!formData.step}
               />
-              <p className="text-white/60 font-source-sans text-[12px]">
+              <p className="text-text-subtle text-xs">
                 Select from the list or type to create a custom substep
               </p>
             </div>
 
             {/* Optional Instruction */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="instruction" className="font-source-code text-[14px] text-white">
+              <label htmlFor="instruction" className="text-sm font-medium text-text-default">
                 Optional Instruction
               </label>
               <textarea
@@ -252,7 +259,7 @@ export default function SubmitTool() {
                 value={formData.instruction}
                 onChange={handleChange}
                 rows={3}
-                className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors resize-vertical"
+                className="bg-kumo-elevated border border-kumo-line rounded-lg px-4 py-3 text-base text-text-default focus:outline-none focus:border-kumo-brand focus:ring-1 focus:ring-kumo-brand transition-colors resize-vertical"
                 placeholder="Any specific instructions or tips for using this tool in this context..."
               />
             </div>
@@ -261,21 +268,21 @@ export default function SubmitTool() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-orange-500 hover:bg-orange-600 active:bg-orange-700 disabled:bg-orange-500/50 disabled:cursor-not-allowed text-white font-source-code text-[16px] py-4 rounded transition-colors"
+              className="w-full bg-kumo-brand hover:bg-kumo-brand-hover active:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium text-base py-4 rounded-lg transition-colors"
             >
               {isSubmitting ? "Submitting..." : "Submit Tool for Approval"}
             </button>
 
             {/* Error Message */}
             {submitStatus === "error" && (
-              <div className="bg-red-500/10 border border-red-500/50 rounded px-4 py-3 font-source-sans text-[14px] text-red-400">
+              <div className="bg-kumo-danger/10 border border-kumo-danger/50 rounded-lg px-4 py-3 text-sm text-kumo-danger">
                 ✗ Failed to submit. Please try again or contact support.
               </div>
             )}
           </form>
 
-          <p className="text-white/60 font-source-sans text-[14px] text-center">
-            Submissions will be sent to <span className="text-orange-500">thi@cloudflare.com</span> for review.
+          <p className="text-text-subtle text-sm text-center">
+            Submissions will be sent to <span className="text-kumo-brand-text">thi@cloudflare.com</span> for review.
           </p>
         </div>
       </main>

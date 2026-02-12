@@ -101,12 +101,12 @@ export default function CreatableSelect({
         required={required}
         disabled={disabled}
         placeholder={placeholder}
-        className="bg-navy-800 border border-white/20 rounded px-4 py-3 font-source-sans text-[16px] text-white focus:outline-none focus:border-orange-500 transition-colors w-full disabled:opacity-50 disabled:cursor-not-allowed"
+        className="bg-kumo-elevated border border-kumo-line rounded-lg px-4 py-3 text-base text-text-default focus:outline-none focus:border-kumo-brand focus:ring-1 focus:ring-kumo-brand transition-colors w-full disabled:opacity-50 disabled:cursor-not-allowed"
         autoComplete="off"
       />
 
       {isOpen && !disabled && (
-        <div className="absolute z-10 w-full mt-1 bg-navy-800 border border-white/20 rounded shadow-lg max-h-60 overflow-auto">
+        <div className="absolute z-10 w-full mt-1 bg-kumo-overlay border border-kumo-line rounded-lg shadow-lg max-h-60 overflow-auto">
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option, idx) => (
               <button
@@ -114,10 +114,10 @@ export default function CreatableSelect({
                 type="button"
                 onClick={() => handleSelect(option)}
                 className={clsx(
-                  "w-full text-left px-4 py-3 font-source-sans text-[16px] transition-colors",
+                  "w-full text-left px-4 py-3 text-base transition-colors",
                   value === option
-                    ? "bg-orange-500 text-white"
-                    : "text-white hover:bg-white/10"
+                    ? "bg-kumo-brand text-white"
+                    : "text-text-default hover:bg-kumo-tint"
                 )}
               >
                 {option}
@@ -127,12 +127,12 @@ export default function CreatableSelect({
             <button
               type="button"
               onClick={() => handleSelect(searchTerm)}
-              className="w-full text-left px-4 py-3 font-source-sans text-[16px] text-orange-500 hover:bg-white/10 transition-colors"
+              className="w-full text-left px-4 py-3 text-base text-kumo-brand-text hover:bg-kumo-tint transition-colors"
             >
-              <span className="text-white/60">Create: </span>&quot;{searchTerm}&quot;
+              <span className="text-text-subtle">Create: </span>&quot;{searchTerm}&quot;
             </button>
           ) : (
-            <div className="px-4 py-3 font-source-sans text-[16px] text-white/60 italic">
+            <div className="px-4 py-3 text-base text-text-subtle italic">
               No options found
             </div>
           )}

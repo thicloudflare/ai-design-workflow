@@ -9,27 +9,27 @@ export default function Navigation() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className="flex gap-6 items-start justify-center font-source-code text-[16px] text-center underline w-full">
+    <nav className="flex gap-6 items-start justify-center text-base text-center w-full">
       <Link
         href="/"
-        className={`transition-colors ${
-          isActive("/") ? "text-[#FFA60C]" : "text-white hover:text-[#FFA60C]/80"
+        className={`transition-colors underline decoration-kumo-line hover:decoration-kumo-brand ${
+          isActive("/") ? "text-kumo-brand-text" : "text-text-default hover:text-kumo-brand-text"
         }`}
       >
         Home
       </Link>
       <Link
         href="/submit"
-        className={`transition-colors ${
-          isActive("/submit") ? "text-[#FFA60C]" : "text-white hover:text-[#FFA60C]/80"
+        className={`transition-colors underline decoration-kumo-line hover:decoration-kumo-brand ${
+          isActive("/submit") ? "text-kumo-brand-text" : "text-text-default hover:text-kumo-brand-text"
         }`}
       >
         Submit a tool
       </Link>
       <Link
         href="/how-to-use"
-        className={`transition-colors ${
-          isActive("/how-to-use") ? "text-[#FFA60C]" : "text-white hover:text-[#FFA60C]/80"
+        className={`transition-colors underline decoration-kumo-line hover:decoration-kumo-brand ${
+          isActive("/how-to-use") ? "text-kumo-brand-text" : "text-text-default hover:text-kumo-brand-text"
         }`}
       >
         Guide & Contribute

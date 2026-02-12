@@ -17,12 +17,12 @@ export default function ToolLink({ tool, onClick }: ToolLinkProps) {
   return (
     <button
       onClick={onClick}
-      className="bg-white/5 hover:bg-white/10 active:bg-transparent flex gap-[10px] items-center justify-center px-[10px] py-[10px] rounded transition-colors"
+      className="bg-kumo-tint hover:bg-kumo-interact active:bg-kumo-fill flex gap-3 items-center justify-center px-3 py-2.5 rounded-lg transition-colors"
     >
-      <span className="text-orange-500 shrink-0">
+      <span className="text-kumo-brand-text shrink-0">
         {getIcon(tool.icon)}
       </span>
-      <span className="font-source-sans text-[14px] text-orange-500 whitespace-nowrap">
+      <span className="text-sm text-kumo-brand-text whitespace-nowrap">
         {tool.name}
       </span>
     </button>

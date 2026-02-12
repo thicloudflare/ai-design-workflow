@@ -80,18 +80,18 @@ export default function SearchBar({ onToolSelect }: SearchBarProps) {
     <div ref={searchRef} className="relative w-full max-w-xl">
       {/* Search Input */}
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
+        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-inactive" />
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search tools..."
-          className="w-full bg-navy-800 border border-white/20 rounded-lg pl-12 pr-12 py-3 font-source-sans text-[16px] text-white placeholder:text-white/50 focus:outline-none focus:border-orange-500 transition-colors"
+          className="w-full bg-kumo-elevated border border-kumo-line rounded-lg pl-12 pr-12 py-3 text-base text-text-default placeholder:text-text-inactive focus:outline-none focus:border-kumo-brand focus:ring-1 focus:ring-kumo-brand transition-colors"
         />
         {searchQuery && (
           <button
             onClick={handleClear}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white transition-colors"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-text-inactive hover:text-text-default transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -100,28 +100,28 @@ export default function SearchBar({ onToolSelect }: SearchBarProps) {
 
       {/* Search Results Dropdown */}
       {isOpen && searchResults.length > 0 && (
-        <div className="absolute z-50 w-full mt-2 bg-navy-800 border border-white/20 rounded-lg shadow-2xl max-h-96 overflow-y-auto">
+        <div className="absolute z-50 w-full mt-2 bg-kumo-overlay border border-kumo-line rounded-lg shadow-2xl max-h-96 overflow-y-auto">
           <div className="py-2">
             {searchResults.map((result, idx) => (
               <button
                 key={idx}
                 onClick={() => handleToolClick(result)}
-                className="w-full text-left px-4 py-3 hover:bg-white/10 transition-colors border-b border-white/10 last:border-b-0"
+                className="w-full text-left px-4 py-3 hover:bg-kumo-tint transition-colors border-b border-kumo-line last:border-b-0"
               >
                 <div className="flex items-start gap-3">
                   <div className="flex-1">
-                    <div className="font-source-sans font-bold text-[14px] text-white mb-1">
+                    <div className="font-semibold text-sm text-text-default mb-1">
                       {result.tool.name}
                     </div>
-                    <div className="font-source-sans text-[12px] text-white/70 line-clamp-2 mb-2">
+                    <div className="text-xs text-text-subtle line-clamp-2 mb-2">
                       {result.tool.description}
                     </div>
-                    <div className="flex items-center gap-2 text-[11px]">
-                      <span className="text-orange-500 font-source-code font-bold">
+                    <div className="flex items-center gap-2 text-xs">
+                      <span className="text-kumo-brand-text font-semibold">
                         {result.phaseNumber}. {result.phaseTitle}
                       </span>
-                      <span className="text-white/50">→</span>
-                      <span className="text-white/60 font-source-sans">
+                      <span className="text-text-inactive">→</span>
+                      <span className="text-text-subtle">
                         {result.sectionTitle}
                       </span>
                     </div>
@@ -135,8 +135,8 @@ export default function SearchBar({ onToolSelect }: SearchBarProps) {
 
       {/* No Results */}
       {isOpen && searchQuery && searchResults.length === 0 && (
-        <div className="absolute z-50 w-full mt-2 bg-navy-800 border border-white/20 rounded-lg shadow-2xl p-4">
-          <p className="font-source-sans text-[14px] text-white/60 text-center">
+        <div className="absolute z-50 w-full mt-2 bg-kumo-overlay border border-kumo-line rounded-lg shadow-2xl p-4">
+          <p className="text-sm text-text-subtle text-center">
             No tools found for &quot;{searchQuery}&quot;
           </p>
         </div>

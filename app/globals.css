@@ -2,14 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: 'Source Code Pro', monospace;
+/* Kumo Design System Theme */
+@layer base {
+  :root {
+    color-scheme: light;
+    
+    /* Kumo semantic colors - Light mode */
+    --color-kumo-base: #fff;
+    --color-kumo-elevated: oklch(0.99 0 0);
+    --color-kumo-recessed: oklch(0.9 0 0);
+    --color-kumo-overlay: oklch(98.5% 0 0);
+    --color-kumo-contrast: oklch(20.5% 0 0);
+    --color-kumo-control: #fff;
+    --color-kumo-tint: oklch(0.96 0 0);
+    --color-kumo-interact: oklch(87% 0 0);
+    --color-kumo-fill: oklch(92.2% 0 0);
+    --color-kumo-line: oklch(14.5% 0 0 / 0.1);
+    --color-kumo-ring: oklch(70.8% 0 0);
+    
+    /* Brand colors */
+    --color-kumo-brand: oklch(0.5772 0.2324 260);
+    --color-kumo-brand-hover: oklch(48.8% 0.243 264.376);
+    --color-kumo-brand-text: #f6821f;
+    
+    /* Text colors */
+    --text-color-default: oklch(21% 0.006 285.885);
+    --text-color-subtle: oklch(55.6% 0 0);
+    --text-color-inactive: oklch(70.8% 0 0);
+    --text-color-link: oklch(42.4% 0.199 265.638);
+    
+    /* Status colors */
+    --color-kumo-info: oklch(62.3% 0.214 259.815);
+    --color-kumo-success: oklch(72.3% 0.219 149.579);
+    --color-kumo-warning: oklch(79.5% 0.184 86.047);
+    --color-kumo-danger: oklch(63.7% 0.237 25.331);
+  }
+
+  [data-mode="dark"] {
+    color-scheme: dark;
+    
+    /* Kumo semantic colors - Dark mode */
+    --color-kumo-base: #000;
+    --color-kumo-elevated: oklch(14.5% 0 0);
+    --color-kumo-recessed: oklch(0.31 0 0);
+    --color-kumo-overlay: oklch(26.9% 0 0);
+    --color-kumo-contrast: oklch(97% 0 0);
+    --color-kumo-control: oklch(21% 0.006 285.885);
+    --color-kumo-tint: oklch(0.23 0 0);
+    --color-kumo-interact: oklch(37.1% 0 0);
+    --color-kumo-fill: oklch(26.9% 0 0);
+    --color-kumo-line: oklch(26.9% 0 0);
+    --color-kumo-ring: oklch(43.9% 0 0);
+    
+    /* Text colors - Dark mode */
+    --text-color-default: oklch(97% 0 0);
+    --text-color-subtle: oklch(98.5% 0 0);
+    --text-color-inactive: oklch(70.8% 0 0);
+    --text-color-link: oklch(70.7% 0.165 254.624);
+    
+    /* Status colors - Dark mode */
+    --color-kumo-info: oklch(48.8% 0.243 264.376);
+    --color-kumo-success: oklch(72.3% 0.219 149.579);
+    --color-kumo-warning: oklch(55.4% 0.135 66.442);
+    --color-kumo-danger: oklch(50.5% 0.213 27.518);
+  }
 }
 
-/* Custom scrollbar styling */
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar styling - Kumo style */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #ffa60c #080516;
+  scrollbar-color: var(--color-kumo-interact) var(--color-kumo-base);
 }
 
 *::-webkit-scrollbar {
@@ -18,15 +86,15 @@ body {
 }
 
 *::-webkit-scrollbar-track {
-  background: #080516;
+  background: var(--color-kumo-base);
   border-radius: 4px;
 }
 
 *::-webkit-scrollbar-thumb {
-  background: #ffa60c;
+  background: var(--color-kumo-interact);
   border-radius: 4px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: #ff8c00;
+  background: var(--color-kumo-ring);
 }

@@ -1,18 +1,25 @@
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function SubmissionSuccess() {
   return (
-    <div className="min-h-screen bg-navy-900 text-white">
-      <main className="flex flex-col gap-[64px] items-center p-8 min-h-screen">
-        <Navigation />
+    <div className="min-h-screen bg-kumo-base text-text-default">
+      <main className="flex flex-col gap-16 items-center p-8 min-h-screen">
+        <div className="w-full flex items-center justify-between max-w-2xl">
+          <div className="flex-1" />
+          <Navigation />
+          <div className="flex-1 flex justify-end">
+            <ThemeToggle />
+          </div>
+        </div>
 
-        <div className="flex flex-col gap-[32px] items-center w-full max-w-2xl flex-1 justify-center">
+        <div className="flex flex-col gap-8 items-center w-full max-w-2xl flex-1 justify-center">
           <div className="text-center space-y-6">
             {/* Success Icon */}
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-500/10 border-2 border-green-500">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-kumo-success/10 border-2 border-kumo-success">
               <svg
-                className="w-10 h-10 text-green-500"
+                className="w-10 h-10 text-kumo-success"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -28,30 +35,30 @@ export default function SubmissionSuccess() {
 
             {/* Success Message */}
             <div className="space-y-3">
-              <h1 className="text-[48px] font-bold text-white font-source-code leading-normal">
+              <h1 className="text-4xl font-semibold text-text-default leading-normal">
                 Thank You!
               </h1>
-              <p className="text-[20px] text-white/80 font-source-sans">
+              <p className="text-xl text-text-subtle">
                 Your tool submission has been received.
               </p>
             </div>
 
             {/* Details */}
-            <div className="bg-navy-800 border border-white/20 rounded-lg p-6 text-left space-y-3">
-              <p className="font-source-sans text-[16px] text-white/80">
-                <strong className="text-white">What happens next?</strong>
+            <div className="bg-kumo-elevated border border-kumo-line rounded-lg p-6 text-left space-y-3">
+              <p className="text-base text-text-subtle">
+                <strong className="text-text-default">What happens next?</strong>
               </p>
-              <ul className="space-y-2 font-source-sans text-[14px] text-white/70">
+              <ul className="space-y-2 text-sm text-text-subtle">
                 <li className="flex items-start gap-2">
-                  <span className="text-orange-500 mt-1">•</span>
+                  <span className="text-kumo-brand-text mt-1">•</span>
                   <span>Your submission has been sent to our team for review</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-orange-500 mt-1">•</span>
+                  <span className="text-kumo-brand-text mt-1">•</span>
                   <span>We&apos;ll manually review and add approved tools to the workflow</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-orange-500 mt-1">•</span>
+                  <span className="text-kumo-brand-text mt-1">•</span>
                   <span>You&apos;ll see your tool on the site once it&apos;s been added</span>
                 </li>
               </ul>
@@ -61,13 +68,13 @@ export default function SubmissionSuccess() {
             <div className="flex gap-4 justify-center pt-6">
               <Link
                 href="/"
-                className="bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white font-source-code text-[16px] px-6 py-3 rounded transition-colors inline-block"
+                className="bg-kumo-brand hover:bg-kumo-brand-hover active:opacity-90 text-white font-medium text-base px-6 py-3 rounded-lg transition-colors inline-block"
               >
                 Back to Home
               </Link>
               <Link
                 href="/submit"
-                className="bg-white/10 hover:bg-white/20 active:bg-white/5 text-white font-source-code text-[16px] px-6 py-3 rounded transition-colors inline-block border border-white/20"
+                className="bg-kumo-tint hover:bg-kumo-interact active:bg-kumo-fill text-text-default font-medium text-base px-6 py-3 rounded-lg transition-colors inline-block border border-kumo-line"
               >
                 Submit Another Tool
               </Link>

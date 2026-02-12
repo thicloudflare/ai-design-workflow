@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import ThemeToggle from "@/components/ThemeToggle";
 import { 
   MousePointerClick, 
   Wrench, 
@@ -15,24 +16,30 @@ import {
 
 export default function HowToUse() {
   return (
-    <div className="min-h-screen bg-navy-900 text-white">
-      <main className="flex flex-col gap-[64px] items-center p-8 min-h-screen pb-20">
-        <Navigation />
+    <div className="min-h-screen bg-kumo-base text-text-default">
+      <main className="flex flex-col gap-16 items-center p-8 min-h-screen pb-20">
+        <div className="w-full flex items-center justify-between max-w-4xl">
+          <div className="flex-1" />
+          <Navigation />
+          <div className="flex-1 flex justify-end">
+            <ThemeToggle />
+          </div>
+        </div>
 
-        <div className="flex flex-col gap-[48px] items-start w-full max-w-4xl">
+        <div className="flex flex-col gap-12 items-start w-full max-w-4xl">
           {/* How to Use This Resource */}
           <section className="w-full space-y-6">
-            <h1 className="text-[48px] font-bold text-white font-source-code leading-normal">
+            <h1 className="text-4xl font-semibold text-text-default leading-normal">
               How to Use This Resource
             </h1>
 
-            <div className="space-y-6 font-source-sans text-[16px] text-white/80">
+            <div className="space-y-6 text-base text-text-subtle">
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center">
-                  <MousePointerClick className="w-5 h-5 text-orange-500" />
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-kumo-brand/10 flex items-center justify-center">
+                  <MousePointerClick className="w-5 h-5 text-kumo-brand-text" />
                 </div>
                 <div>
-                  <h3 className="text-[18px] font-bold text-white mb-2">Select a Phase</h3>
+                  <h3 className="text-lg font-semibold text-text-default mb-2">Select a Phase</h3>
                   <p>
                     Click any of the six major phases (Discovery, Ideation, etc.) to reveal the
                     detailed sub-steps.
@@ -41,11 +48,11 @@ export default function HowToUse() {
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center">
-                  <Wrench className="w-5 h-5 text-orange-500" />
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-kumo-brand/10 flex items-center justify-center">
+                  <Wrench className="w-5 h-5 text-kumo-brand-text" />
                 </div>
                 <div>
-                  <h3 className="text-[18px] font-bold text-white mb-2">View the Toolkit</h3>
+                  <h3 className="text-lg font-semibold text-text-default mb-2">View the Toolkit</h3>
                   <p>
                     Each sub-step lists a specific AI Tool or Method and how it assists with that
                     design activity.
@@ -54,11 +61,11 @@ export default function HowToUse() {
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-orange-500" />
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-kumo-brand/10 flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-kumo-brand-text" />
                 </div>
                 <div>
-                  <h3 className="text-[18px] font-bold text-white mb-2">Implement & Learn</h3>
+                  <h3 className="text-lg font-semibold text-text-default mb-2">Implement & Learn</h3>
                   <p>
                     Use these suggestions as a practical toolkit to integrate AI capabilities into
                     your own projects for accelerated, data-driven design.
@@ -67,11 +74,11 @@ export default function HowToUse() {
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center">
-                  <Copy className="w-5 h-5 text-orange-500" />
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-kumo-brand/10 flex items-center justify-center">
+                  <Copy className="w-5 h-5 text-kumo-brand-text" />
                 </div>
                 <div>
-                  <h3 className="text-[18px] font-bold text-white mb-2">Replicate</h3>
+                  <h3 className="text-lg font-semibold text-text-default mb-2">Replicate</h3>
                   <p>
                     This guide is built in Windsurf and Figma. Duplicate the project to create your
                     own customized internal design handbook.
@@ -82,24 +89,24 @@ export default function HowToUse() {
           </section>
 
           {/* How to Contribute */}
-          <section className="w-full space-y-6 pt-8 border-t border-white/10">
-            <h2 className="text-[36px] font-bold text-white font-source-code leading-normal">
+          <section className="w-full space-y-6 pt-8 border-t border-kumo-line">
+            <h2 className="text-3xl font-semibold text-text-default leading-normal">
               How to Contribute (Open Source)
             </h2>
 
-            <p className="font-source-sans text-[16px] text-white/80">
+            <p className="text-base text-text-subtle">
               This guide is an open-source project maintained by the Cloudflare One Design Team, and
               we welcome contributions from the wider community. Your experience and knowledge help
               keep this resource current and comprehensive.
             </p>
 
-            <div className="space-y-6 font-source-sans text-[16px] text-white/80">
+            <div className="space-y-6 text-base text-text-subtle">
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center">
-                  <Github className="w-5 h-5 text-orange-500" />
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-kumo-brand/10 flex items-center justify-center">
+                  <Github className="w-5 h-5 text-kumo-brand-text" />
                 </div>
                 <div>
-                  <h3 className="text-[18px] font-bold text-white mb-2">
+                  <h3 className="text-lg font-semibold text-text-default mb-2">
                     Report Issues/Suggest Changes
                   </h3>
                   <p>
@@ -110,11 +117,11 @@ export default function HowToUse() {
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center">
-                  <GitBranch className="w-5 h-5 text-orange-500" />
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-kumo-brand/10 flex items-center justify-center">
+                  <GitBranch className="w-5 h-5 text-kumo-brand-text" />
                 </div>
                 <div>
-                  <h3 className="text-[18px] font-bold text-white mb-2">
+                  <h3 className="text-lg font-semibold text-text-default mb-2">
                     Contribute Content & Code
                   </h3>
                   <p className="mb-3">
@@ -133,11 +140,11 @@ export default function HowToUse() {
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center">
-                  <FileText className="w-5 h-5 text-orange-500" />
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-kumo-brand/10 flex items-center justify-center">
+                  <FileText className="w-5 h-5 text-kumo-brand-text" />
                 </div>
                 <div>
-                  <h3 className="text-[18px] font-bold text-white mb-2">
+                  <h3 className="text-lg font-semibold text-text-default mb-2">
                     Documentation & Examples
                   </h3>
                   <p>
@@ -147,11 +154,11 @@ export default function HowToUse() {
                 </div>
               </div>
 
-              <div className="bg-navy-800 border border-white/20 rounded-lg p-6 mt-4">
-                <p className="text-[14px]">
+              <div className="bg-kumo-elevated border border-kumo-line rounded-lg p-6 mt-4">
+                <p className="text-sm">
                   Please review our{" "}
-                  <span className="text-orange-500 font-bold">CONTRIBUTING.md</span> and{" "}
-                  <span className="text-orange-500 font-bold">CODE_OF_CONDUCT.md</span> files before
+                  <span className="text-kumo-brand-text font-semibold">CONTRIBUTING.md</span> and{" "}
+                  <span className="text-kumo-brand-text font-semibold">CODE_OF_CONDUCT.md</span> files before
                   submitting your first contribution.
                 </p>
               </div>
@@ -159,18 +166,18 @@ export default function HowToUse() {
           </section>
 
           {/* Disclaimer & Attribution */}
-          <section className="w-full space-y-6 pt-8 border-t border-white/10">
-            <h2 className="text-[36px] font-bold text-white font-source-code leading-normal">
+          <section className="w-full space-y-6 pt-8 border-t border-kumo-line">
+            <h2 className="text-3xl font-semibold text-text-default leading-normal">
               Disclaimer & Attribution
             </h2>
 
-            <div className="space-y-6 font-source-sans text-[16px] text-white/80">
+            <div className="space-y-6 text-base text-text-subtle">
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center">
-                  <AlertTriangle className="w-5 h-5 text-orange-500" />
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-kumo-warning/10 flex items-center justify-center">
+                  <AlertTriangle className="w-5 h-5 text-kumo-warning" />
                 </div>
                 <div>
-                  <h3 className="text-[18px] font-bold text-white mb-2">Proprietary Notice</h3>
+                  <h3 className="text-lg font-semibold text-text-default mb-2">Proprietary Notice</h3>
                   <p>
                     This resource and its original content were created by and for the Cloudflare
                     One Design Team. The purpose of releasing this project as open source is solely
@@ -181,11 +188,11 @@ export default function HowToUse() {
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center">
-                  <Scale className="w-5 h-5 text-orange-500" />
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-kumo-brand/10 flex items-center justify-center">
+                  <Scale className="w-5 h-5 text-kumo-brand-text" />
                 </div>
                 <div>
-                  <h3 className="text-[18px] font-bold text-white mb-2">Open Source License</h3>
+                  <h3 className="text-lg font-semibold text-text-default mb-2">Open Source License</h3>
                   <p>
                     The content (text, diagrams, framework structure) is licensed under an
                     [appropriate open-source content license, e.g., CC BY 4.0]. All source code is
@@ -195,11 +202,11 @@ export default function HowToUse() {
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center">
-                  <ShieldAlert className="w-5 h-5 text-orange-500" />
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-kumo-danger/10 flex items-center justify-center">
+                  <ShieldAlert className="w-5 h-5 text-kumo-danger" />
                 </div>
                 <div>
-                  <h3 className="text-[18px] font-bold text-white mb-2">
+                  <h3 className="text-lg font-semibold text-text-default mb-2">
                     No Warranties & Use at Your Own Risk
                   </h3>
                   <p>
@@ -213,11 +220,11 @@ export default function HowToUse() {
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center">
-                  <Copy className="w-5 h-5 text-orange-500" />
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-kumo-brand/10 flex items-center justify-center">
+                  <Copy className="w-5 h-5 text-kumo-brand-text" />
                 </div>
                 <div>
-                  <h3 className="text-[18px] font-bold text-white mb-2">
+                  <h3 className="text-lg font-semibold text-text-default mb-2">
                     Duplication and Adaptation
                   </h3>
                   <p>

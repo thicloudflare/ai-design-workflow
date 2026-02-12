@@ -6,20 +6,49 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: ["selector", "[data-mode='dark']"],
   theme: {
     extend: {
       colors: {
-        navy: {
-          900: "#0b071d", // Main background from Figma
-          800: "#080516", // Secondary background from Figma
+        kumo: {
+          base: "var(--color-kumo-base)",
+          elevated: "var(--color-kumo-elevated)",
+          recessed: "var(--color-kumo-recessed)",
+          overlay: "var(--color-kumo-overlay)",
+          contrast: "var(--color-kumo-contrast)",
+          control: "var(--color-kumo-control)",
+          tint: "var(--color-kumo-tint)",
+          interact: "var(--color-kumo-interact)",
+          fill: "var(--color-kumo-fill)",
+          line: "var(--color-kumo-line)",
+          ring: "var(--color-kumo-ring)",
+          brand: "var(--color-kumo-brand)",
+          "brand-hover": "var(--color-kumo-brand-hover)",
+          "brand-text": "var(--color-kumo-brand-text)",
+          info: "var(--color-kumo-info)",
+          success: "var(--color-kumo-success)",
+          warning: "var(--color-kumo-warning)",
+          danger: "var(--color-kumo-danger)",
         },
-        orange: {
-          500: "#ffa60c", // Orange accent from Figma
+        text: {
+          default: "var(--text-color-default)",
+          subtle: "var(--text-color-subtle)",
+          inactive: "var(--text-color-inactive)",
+          link: "var(--text-color-link)",
         },
       },
       fontFamily: {
-        'source-code': ['"Source Code Pro"', 'monospace'],
-        'source-sans': ['"Source Sans 3"', 'sans-serif'],
+        sans: ['"Inter"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        xs: ['12px', { lineHeight: '1.33' }],
+        sm: ['13px', { lineHeight: '1.23' }],
+        base: ['14px', { lineHeight: '1.43' }],
+        lg: ['16px', { lineHeight: '1.25' }],
+        xl: ['20px', { lineHeight: '1.4' }],
+        '2xl': ['24px', { lineHeight: '1.33' }],
+        '3xl': ['32px', { lineHeight: '1.25' }],
+        '4xl': ['40px', { lineHeight: '1.2' }],
       },
       keyframes: {
         slideDown: {

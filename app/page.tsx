@@ -76,7 +76,7 @@ export default function Home() {
                 The Designer&apos;s Cheat Code: <span className="text-kumo-brand-text">AI Edition</span>
               </h1>
               <p className="text-lg text-text-subtle max-w-2xl">
-                A comprehensive guide for integrating AI capabilities into your design process. 
+                A comprehensive guide for integrating AI capabilities into your design workflow. 
                 Select a phase below to explore AI tools and methods.
               </p>
             </div>

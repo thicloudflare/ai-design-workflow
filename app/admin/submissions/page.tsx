@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Check, X, ExternalLink, Sparkles, Eye, EyeOff, Trash2, Plus, Edit, Save } from "lucide-react";
 import Navigation from "@/components/Navigation";
+import ThemeToggle from "@/components/ThemeToggle";
 import { phases as staticPhases } from "@/data/phases";
 
 interface Submission {
@@ -357,25 +358,34 @@ export default function AdminSubmissions() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-kumo-base text-text-default flex items-center justify-center p-8">
-        <div className="bg-kumo-elevated border border-kumo-brand/30 rounded-lg p-8 max-w-md w-full">
-          <h1 className="text-2xl font-semibold mb-6 text-center">Admin Login</h1>
-          <form onSubmit={handleLogin} className="space-y-4">
-            <input
-              type="password"
-              placeholder="Admin Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-kumo-recessed border border-kumo-line rounded-lg px-4 py-3 text-text-default focus:outline-none focus:border-kumo-brand focus:ring-1 focus:ring-kumo-brand"
-              required
-            />
-            <button
-              type="submit"
-              className="w-full bg-kumo-brand hover:bg-kumo-brand-hover text-white py-3 rounded-lg font-medium"
-            >
-              Login
-            </button>
-          </form>
+      <div className="min-h-screen bg-kumo-base text-text-default flex flex-col p-8">
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex-1" />
+          <Navigation />
+          <div className="flex-1 flex justify-end">
+            <ThemeToggle />
+          </div>
+        </div>
+        <div className="flex-1 flex items-center justify-center">
+          <div className="bg-kumo-elevated border border-kumo-brand/30 rounded-lg p-8 max-w-md w-full">
+            <h1 className="text-2xl font-semibold mb-6 text-center">Admin Login</h1>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <input
+                type="password"
+                placeholder="Admin Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full bg-kumo-recessed border border-kumo-line rounded-lg px-4 py-3 text-text-default focus:outline-none focus:border-kumo-brand focus:ring-1 focus:ring-kumo-brand"
+                required
+              />
+              <button
+                type="submit"
+                className="w-full bg-kumo-brand hover:bg-kumo-brand-hover text-white py-3 rounded-lg font-medium"
+              >
+                Login
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     );
@@ -384,7 +394,13 @@ export default function AdminSubmissions() {
   return (
     <div className="min-h-screen bg-kumo-base text-text-default">
       <main className="flex flex-col gap-8 p-8">
-        <Navigation />
+        <div className="flex items-center justify-between">
+          <div className="flex-1" />
+          <Navigation />
+          <div className="flex-1 flex justify-end">
+            <ThemeToggle />
+          </div>
+        </div>
 
         <div className="max-w-6xl mx-auto w-full space-y-8">
           <div className="flex items-center justify-between">

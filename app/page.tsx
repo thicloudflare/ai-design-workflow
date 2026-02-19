@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { MessageSquare } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import ThemeToggle from "@/components/ThemeToggle";
 import PhaseCard from "@/components/PhaseCard";
@@ -59,7 +60,16 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <div className="flex-1" />
             <Navigation />
-            <div className="flex-1 flex justify-end">
+            <div className="flex-1 flex justify-end gap-2">
+              <a
+                href="https://docs.google.com/forms/d/1cl9ma2SXeT7t_hB3W9FzOzzvLKLaEISv1sDMQGPyIbk/edit"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-3 py-2 rounded-lg bg-kumo-tint hover:bg-kumo-interact transition-colors text-sm font-medium text-text-default"
+              >
+                <MessageSquare className="w-4 h-4" />
+                Feedback
+              </a>
               <ThemeToggle />
             </div>
           </div>
